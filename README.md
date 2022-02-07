@@ -6,11 +6,17 @@ We are just starting out. See [the design document](./doc/design.md) for plans.
 
 ## Contributing
 
+**NOTE**: install hack for the moment until kedro version 0.18 which
+supports python 3.9.
+
 ```shell
 git clone git@github.com:FactFiber/kedro-dvc.git
 cd kedro-dvc
-poetry install
 poetry run pre-commit install && poetry run pre-commit install ----hook-type commit-msg
+poetry env use python3.9
+poetry install
+poetry shell
+pip install kedro
 ...
 poetry run pytest
 ```
