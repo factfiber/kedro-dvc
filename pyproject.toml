@@ -8,8 +8,9 @@ version = "0.1.1"
 packages = [{include = "kedro_dvc", from = "src"}]
 
 [tool.poetry.dependencies]
+dvc = "^2.9.3"
 numpy = "^1.22.2"
-python = "^3.9"
+python = ">=3.8, <3.10"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
