@@ -1,11 +1,11 @@
 [tool.poetry]
 authors = ["Shaun Cutts <shaunc@factfiber.com>"]
-description = ""
+description = "Kedro-DVC integration to track and distribute experiments."
 license = "See License in LICENSE"
-name = "proto-semantic-release-py"
+name = "kedro-dvc"
 version = "0.1.1"
 
-packages = [{include = "demo", from = "src"}]
+packages = [{include = "kedro_dvc", from = "src"}]
 
 [tool.poetry.dependencies]
 numpy = "^1.22.2"
