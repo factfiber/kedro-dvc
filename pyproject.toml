@@ -54,6 +54,6 @@ build_command = "pip install poetry && poetry build"
 upload_to_pypi = false
 upload_to_release = true
 version_variable = [
-  "src/demo/__init__.py:__version__",
+  "src/kedro_dvc/__init__.py:__version__",
   "pyproject.toml:version",
 ]
