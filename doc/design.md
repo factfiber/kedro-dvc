@@ -44,9 +44,12 @@ to changes in data, code and parameters.
 
 ### Stage 1: setup correspondence between kedro and dvc
 
-* ***Map kedro node inputs and outputs to dvc tracked artifacts***
+***Map kedro node inputs and outputs to dvc tracked artifacts***
 
-Kedro-dvc will be implemented as a [Kedro plugin](https://kedro.readthedocs.io/en/stable/07_extend_kedro/04_plugins.html#).
+* Kedro-dvc will be implemented as a [Kedro plugin](https://kedro.readthedocs.io/en/stable/07_extend_kedro/04_plugins.html#).
+
+* We will try to interact with dvc via [`dvc.repo.Repo`](https://github.com/iterative/dvc/blob/9b5ccb75549ab950ece23b7938ea0eea637c440d/dvc/repo/__init__.py#L53), which is not a public api, but apparently is
+relatively straightforward.
 
 Kedro has a [data catalog](https://kedro.readthedocs.io/en/latest/05_data/01_data_catalog.html#the-data-catalog) for initial data, which supports [versioned datasets](https://kedro.readthedocs.io/en/latest/05_data/02_kedro_io.html#versioning). DVC uses annotations in [.dvc files](https://dvc.org/doc/user-guide/project-structure/dvc-files#dvc-files) to mark and store hashes.
 
@@ -69,7 +72,7 @@ additional annotations.
 * **Question**: Kedro has [beta support for experiment tracking](https://kedro.readthedocs.io/en/stable/08_logging/02_experiment_tracking.html#experiment-tracking). How should we integrate with this?
 
 
-* ***Map pipelines into dvc.yaml files***
+***Map pipelines into dvc.yaml files***
 
 Each dvc stage corresponds to running of one [kedro
 node](https://kedro.readthedocs.io/en/stable/06_nodes_and_pipelines/01_nodes.html#nodes).
