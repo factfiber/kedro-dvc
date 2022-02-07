@@ -1,0 +1,56 @@
+[tool.poetry]
+authors = ["Shaun Cutts <shaunc@factfiber.com>"]
+description = "Prototype repo with build tools and semantic release"
+license = "See License in LICENSE"
+name = "proto-semantic-release-py"
+version = "0.1.1"
+
+packages = [{include = "demo", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.22.2"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+mypy = "^0.931"
+pre-commit = "^2.17.0"
+pytest = "^7.0.0"
+pytest-cases = "^3.6.8"
+pytest-cov = "^3.0.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.black]
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.tox
+  | venv
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+line-length = 80
+
+[tool.isort]
+# make it compatible with black
+profile = "black"
+
+[tool.semantic_release]
+branch = "main"
+build_command = "pip install poetry && poetry build"
+upload_to_pypi = false
+upload_to_release = true
+version_variable = [
+  "src/demo/__init__.py:__version__",
+  "pyproject.toml:version",
+]
