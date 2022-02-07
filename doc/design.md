@@ -83,9 +83,7 @@ dvc pipeline refers to a specific repository location, while using the
 repo "time" dimension (commits) to store different experiments. Kedro is
 repo-agnostic.
 
-* **Question**: if kedro-dvc wraps pipeline directly, 
-
-At first we will only support local runner.
+* At first we will only support local runner.
 
 ### Stage 2: Code-aware experiments
 
