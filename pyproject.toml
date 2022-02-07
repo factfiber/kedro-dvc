@@ -1,6 +1,6 @@
 [tool.poetry]
 authors = ["Shaun Cutts <shaunc@factfiber.com>"]
-description = "Prototype repo with build tools and semantic release"
+description = ""
 license = "See License in LICENSE"
 name = "proto-semantic-release-py"
 version = "0.1.1"
@@ -8,8 +8,8 @@ version = "0.1.1"
 packages = [{include = "demo", from = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
 numpy = "^1.22.2"
+python = "^3.9"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
@@ -39,7 +39,9 @@ exclude = '''
   | dist
 )/
 '''
+include = '''\.pyi?$'''
 line-length = 80
+target-version = ["py39"]
 
 [tool.isort]
 # make it compatible with black
