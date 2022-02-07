@@ -48,5 +48,5 @@ The implementation roadmap consists of 4 stages. I have moved the details to the
 
 ### [Stage 2: Code-aware experiments](https://github.com/FactFiber/kedro-dvc/discussions/7)
 
-### [Stage 3: Distributed experiments (Kubernetes)]((https://github.com/FactFiber/kedro-dvc/discussions/7)
+### [Stage 3: Distributed experiments (Kubernetes)](https://github.com/FactFiber/kedro-dvc/discussions/7)
 
