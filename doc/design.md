@@ -42,75 +42,11 @@ to changes in data, code and parameters.
 
 ## Design & Roadmap
 
-### Stage 1: setup correspondence between kedro and dvc
+The implementation roadmap consists of 4 stages. I have moved the details to the discussion boards. Please chime in!
 
-***Map kedro node inputs and outputs to dvc tracked artifacts***
+### [Stage 1: setup correspondence between kedro and dvc](https://github.com/FactFiber/kedro-dvc/discussions/6)
 
-* Kedro-dvc will be implemented as a [Kedro plugin](https://kedro.readthedocs.io/en/stable/07_extend_kedro/04_plugins.html#).
+### [Stage 2: Code-aware experiments](https://github.com/FactFiber/kedro-dvc/discussions/7)
 
-* We will try to interact with dvc via [`dvc.repo.Repo`](https://github.com/iterative/dvc/blob/9b5ccb75549ab950ece23b7938ea0eea637c440d/dvc/repo/__init__.py#L53), which is not a public api, but apparently is
-relatively straightforward.
-
-Kedro has a [data catalog](https://kedro.readthedocs.io/en/latest/05_data/01_data_catalog.html#the-data-catalog) for initial data, which supports [versioned datasets](https://kedro.readthedocs.io/en/latest/05_data/02_kedro_io.html#versioning). DVC uses annotations in [.dvc files](https://dvc.org/doc/user-guide/project-structure/dvc-files#dvc-files) to mark and store hashes.
-
-On pipeline run (or via a utility, possibly), kedro supports 
-[kedro hooks](https://kedro.readthedocs.io/en/latest/07_extend_kedro/02_hooks.html). (Hooks can be 
-[registered by plugins](https://kedro.readthedocs.io/en/stable/07_extend_kedro/04_plugins.html#hooks)). 
-In the "before pipeline run", kedro-dvc can create or update dvc
-annotations, and also supply a version number.
-
-* **Question**: should we get version string from dvc, which hashes?
-
-At first, we will only support versioned data stored on local file system. However, both kedro and dvc support remote data, [kedro via fsspec](https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html#specifying-the-location-of-the-dataset), [dvc via its own mechanism](https://dvc.org/doc/user-guide/managing-external-data#managing-external-data). We could add support
-for this in the future. We could also support asynchronous writes
-of data passed in memory in kedro pipelines.
-
-Dvc keeps track of different types of artifact: data, parameters, metrics, plots. We should be able to distinguish between these using
-the type of the items in the data catalog. However, we may require
-additional annotations.
-
-* **Question**: Kedro has [beta support for experiment tracking](https://kedro.readthedocs.io/en/stable/08_logging/02_experiment_tracking.html#experiment-tracking). How should we integrate with this?
-
-
-***Map pipelines into dvc.yaml files***
-
-Each dvc stage corresponds to running of one [kedro
-node](https://kedro.readthedocs.io/en/stable/06_nodes_and_pipelines/01_nodes.html#nodes).
-[DVC pipelines](https://dvc.org/doc/user-guide/project-structure/pipelines-files#pipelines-files-dvcyaml) and 
-[Kedro pipelines](https://kedro.readthedocs.io/en/stable/06_nodes_and_pipelines/02_pipeline_introduction.html#pipelines)
-roughly correspond. Both could refer to several experiments. However, a
-dvc pipeline refers to a specific repository location, while using the
-repo "time" dimension (commits) to store different experiments. Kedro is
-repo-agnostic.
-
-* At first we will only support local runner.
-
-### Stage 2: Code-aware experiments
-
-Use dvc experiment tracking to keep track of different versions of a project. Use kedro hooks with [trace](https://docs.python.org/3/library/trace.html) to optionally skip steps.
-
-* [@mzip2 example skip hook](https://gist.github.com/mzjp2/076bfd73b0215bda01ee71186966389d) but without trace.
-
-Pipelines will have to be run in a number of different modes:
-
-* Run everything, snapshot code dependencies
-* Run as required, using code dependencies stored and/or dvc versions
-* Run without trace for better performance
-
-The intention is to use dvc to manage experiment versions. This may
-require additional coupling between kedro runner and dvc; however,
-by default we can use [dvclive](https://github.com/iterative/dvclive)
-where possible to encapsulate dvc.
-
-### Stage 3: Distributed experiments (Kubernetes)
-
-There are two ways to interact with dvc when distributing python steps: 
-(1) There is one dvc repo; workers use hooks to fetch/store state; (2)
-Each worker has a copy of the repo. Use git mechanisms to merge state.
-
-In the first case, the central repo could be on a shared volume. However, to avoid corrupting state, we probably need to have only one node maintaining dvc state. Alternately, we could make the workers
-completely oblivious to dvc, except that they call a checkpoint api
-after running a node, which collects artifacts and maintains dvc state. In either case, a "runner node" would have to provide an API.
-
-The second case does not require a central server, but might be slow if artifacts must go -- e.g. -- via s3 for every step. Perhaps this could be mitigated by using in-cluster minio as artifact storage.
+### [Stage 3: Distributed experiments (Kubernetes)]((https://github.com/FactFiber/kedro-dvc/discussions/7)
 
