@@ -11,9 +11,10 @@ packages = [{include = "kedro_dvc", from = "src"}]
 dvc = "^2.9.3"
 numpy = "^1.22.2"
 python = ">=3.8, <3.10"
+kedro = {url = "https://github.com/kedro-org/kedro/archive/develop.zip"}
 
 [tool.poetry.dev-dependencies]
-black = "^22.1.0"
+black = "21.12b0"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 mypy = "^0.931"
