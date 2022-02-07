@@ -33,7 +33,7 @@ jobs:
         python -m poetry run isort .
     - name: Format using black src tests
       run: |
-        python -m black src tests
+        python -m poetry run black src tests
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
