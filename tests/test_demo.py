@@ -1,5 +1,5 @@
-import demo
+import kedro_dvc
 
 
 def test_demo():
-    demo is not None
+    kedro_dvc is not None
