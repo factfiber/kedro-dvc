@@ -12,6 +12,16 @@ from pytest_cases import fixture
 from kedro_dvc.create_sample_project import create_sample_project
 
 
+@fixture(name="dvc_repo_session", scope="session")
+def fix_dvc_repo_session() -> DvcRepo:
+    with tempfile.TemporaryDirectory() as dir:
+        # os.mkdir("./temp_test")
+        subprocess.check_call(["git", "init"], cwd=dir)
+        dvc = DvcRepo.init(dir, subdir=True)
+        yield dvc
+        dvc.close()
+
+
 @contextlib.contextmanager
 def to_tmp_dir() -> Iterator[pathlib.Path]:
     """
