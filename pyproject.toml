@@ -1,60 +1,22 @@
-[tool.poetry]
-authors = ["Shaun Cutts <shaunc@factfiber.com>"]
-description = "Kedro-DVC integration to track and distribute experiments."
-license = "See License in LICENSE"
-name = "kedro-dvc"
-version = "0.2.0"
-
-packages = [{include = "kedro_dvc", from = "src"}]
-
-[tool.poetry.dependencies]
-dvc = "^2.9.3"
-numpy = "^1.22.2"
-python = ">=3.8, <3.10"
-kedro = {url = "https://github.com/kedro-org/kedro/archive/develop.zip"}
-
-[tool.poetry.dev-dependencies]
-black = "21.12b0"
-flake8 = "^4.0.1"
-isort = "^5.10.1"
-mypy = "^0.931"
-pre-commit = "^2.17.0"
-pytest = "^7.0.0"
-pytest-cases = "^3.6.8"
-pytest-cov = "^3.0.0"
-
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
-
-[tool.black]
-exclude = '''
-/(
-    \.git
-  | \.mypy_cache
-  | \.tox
-  | venv
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
-include = '''\.pyi?$'''
-line-length = 80
-target-version = ["py39"]
+[tool.kedro]
+package_name = "basic_project"
+project_name = "basic-project"
+project_version = "0.17.6"
 
 [tool.isort]
-# make it compatible with black
-profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+known_third_party = "kedro"
 
-[tool.semantic_release]
-branch = "main"
-build_command = "pip install poetry && poetry build"
-upload_to_pypi = false
-upload_to_release = true
-version_variable = [
-  "src/kedro_dvc/__init__.py:__version__",
-  "pyproject.toml:version",
-]
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src/basic_project -ra"""
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
