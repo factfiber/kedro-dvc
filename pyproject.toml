@@ -30,7 +30,7 @@ requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@
 [tool.poetry-exec-plugin.commands]
 create-sample-project = "bin/create-sample-project.sh"
 
-# NB poetry does not (yet?) support 
+# NB poetry does not (yet?) support PEP 621
 [tool.poetry.plugins."kedro.project_commands"]
 dvc = "kedro_dvc.plugin:dvc"
 
