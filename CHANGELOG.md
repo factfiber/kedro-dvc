@@ -2,6 +2,21 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2022-02-15)
+### Feature
+* Setup basic plugin with example ([`67dd08d`](https://github.com/FactFiber/kedro-dvc/commit/67dd08dc82f6a73825677c8a3a3c38f49334b2c3))
+* Began plugin creation ([`03b542a`](https://github.com/FactFiber/kedro-dvc/commit/03b542a8bb0cf717ce9c9db62cf0e159c8a0ee33))
+* Setup basic plugin with example ([`6949136`](https://github.com/FactFiber/kedro-dvc/commit/69491361f2bec7d3a7094690ba2b3849d88ba56b))
+* Began plugin creation ([`dd13bd1`](https://github.com/FactFiber/kedro-dvc/commit/dd13bd18be879772ff3def70e21675b368a09ebd))
+
+### Fix
+* Used tempfile.TemporaryDirectory ([`239acdf`](https://github.com/FactFiber/kedro-dvc/commit/239acdf5006b8ab6795029f743ed8a60c9759064))
+* Used tempfile.TemporaryDirectory ([`9131943`](https://github.com/FactFiber/kedro-dvc/commit/91319438ec58a7a1f032d52bda97480949a59694))
+
+### Documentation
+* Revise install hack: we can use kedro develop ([`4bb351d`](https://github.com/FactFiber/kedro-dvc/commit/4bb351d6180847395b3fffcb25611e15423c200a))
+* Fix typo in design link to roadmap ([`c0a74b5`](https://github.com/FactFiber/kedro-dvc/commit/c0a74b5fc53fc809c83bc7c6bb057983f8541eef))
+
 ## v0.2.0 (2022-02-07)
 ### Feature
 * Initial commit ([`cad74be`](https://github.com/FactFiber/kedro-dvc/commit/cad74be76ca1898326477041297e60bc673e250a))
