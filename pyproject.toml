@@ -9,12 +9,12 @@ packages = [{include = "kedro_dvc", from = "src"}]
 
 [tool.poetry.dependencies]
 dvc = "^2.9.3"
+kedro = ">=0.17.6, <0.19"
 numpy = "^1.22.2"
-python = ">=3.8, <3.10"
-kedro = {url = "https://github.com/kedro-org/kedro/archive/develop.zip"}
+python = ">=3.8, <3.9"
 
 [tool.poetry.dev-dependencies]
-black = "21.12b0"
+black = "21.12b0, <23"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 mypy = "^0.931"
@@ -25,7 +25,14 @@ pytest-cov = "^3.0.0"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@master"]
+
+[tool.poetry-exec-plugin.commands]
+create-sample-project = "bin/create-sample-project.sh"
+
+# NB poetry does not (yet?) support PEP 621
+[tool.poetry.plugins."kedro.project_commands"]
+dvc = "kedro_dvc.plugin:dvc"
 
 [tool.black]
 exclude = '''

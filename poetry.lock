@@ -212,7 +212,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.11"
+version = "2.0.12"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = false
@@ -312,7 +312,7 @@ test = ["pytest (>=6.2.0)", "pytest-cov", "pytest-subtests", "pytest-xdist", "pr
 
 [[package]]
 name = "decopatch"
-version = "1.4.8"
+version = "1.4.9"
 description = "Create decorators easily in python."
 category = "dev"
 optional = false
@@ -557,17 +557,14 @@ ssh = ["paramiko"]
 
 [[package]]
 name = "ftfy"
-version = "6.0.3"
-description = "Fixes some problems with Unicode text after the fact"
+version = "6.1.1"
+description = "Fixes mojibake and other problems with Unicode, after the fact"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7,<4"
 
 [package.dependencies]
-wcwidth = "*"
-
-[package.extras]
-docs = ["furo", "sphinx"]
+wcwidth = ">=0.2.5"
 
 [[package]]
 name = "funcy"
@@ -624,7 +621,7 @@ full = ["numpy", "ply"]
 
 [[package]]
 name = "identify"
-version = "2.4.8"
+version = "2.4.10"
 description = "File identification library for Python"
 category = "dev"
 optional = false
@@ -750,7 +747,7 @@ version = "0.17.6"
 description = "Kedro helps you build production-ready data and analytics pipelines"
 category = "main"
 optional = false
-python-versions = ">=3.7, <3.10"
+python-versions = ">=3.6, <3.9"
 
 [package.dependencies]
 anyconfig = ">=0.10.0,<0.11.0"
@@ -763,7 +760,7 @@ gitpython = ">=3.0,<4.0"
 jmespath = ">=0.9.5,<1.0"
 jupyter-client = ">=5.1,<7.0"
 pip-tools = ">=6.4,<7.0"
-pluggy = ">=1.0.0,<1.1.0"
+pluggy = ">=0.13.0,<0.14.0"
 python-json-logger = ">=2.0,<3.0"
 PyYAML = ">=4.2,<6.0"
 rope = ">=0.21.0,<0.22.0"
@@ -771,42 +768,42 @@ toml = ">=0.10,<1.0"
 toposort = ">=1.5,<2.0"
 
 [package.extras]
-all = ["Pillow (>=9.0,<10.0)", "PyYAML (>=4.2,<6.0)", "SQLAlchemy (>=1.2,<2.0)", "biopython (>=1.73,<2.0)", "dask[complete] (>=2021.10,<2022.0)", "delta-spark (>=1.0,<2.0)", "docutils (==0.16)", "geopandas (>=0.6.0,<1.0)", "hdfs (>=2.5.8,<3.0)", "holoviews (>=1.13.0,<1.14.0)", "ipykernel (>=5.3,<7.0)", "lxml (>=4.6,<5.0)", "matplotlib (>=3.0.3,<4.0)", "memory-profiler (>=0.50.0,<1.0)", "nbconvert (>=5.3.1,<6.0)", "nbformat (>=4.4,<5.0)", "nbsphinx (==0.8.1)", "nbstripout (>=0.4,<1.0)", "networkx (>=2.4,<3.0)", "openpyxl (>=3.0.6,<4.0)", "pandas-gbq (>=0.12.0,<1.0)", "pandas (>=1.3,<2.0)", "plotly (>=4.8.0,<6.0)", "pyarrow (>=1.0,<7.0)", "pyproj (>=3.0,<4.0)", "pyspark (>=2.2,<4.0)", "recommonmark (==0.7.1)", "requests (>=2.20,<3.0)", "s3fs (>=0.3.0,<0.5)", "sphinx-autodoc-typehints (==1.11.1)", "sphinx-copybutton (==0.3.1)", "sphinx-rtd-theme (==0.4.1)", "sphinx (>=3.4.3,<3.5.0)", "tensorflow (>=2.0,<3.0)", "tables (>=3.6,<4.0)", "tables (>=3.6.0,<3.7.0)", "ipython (>=7.16.3,<7.17.0)", "ipython (>=7.31.1,<8.0)"]
+all = ["Pillow (>=8.0,<9.0)", "PyYAML (>=4.2,<6.0)", "SQLAlchemy (>=1.2,<2.0)", "biopython (>=1.73,<2.0)", "delta-spark (>=1.0,<2.0)", "docutils (==0.16)", "geopandas (>=0.6.0,<1.0)", "hdfs (>=2.5.8,<3.0)", "holoviews (>=1.13.0,<1.14.0)", "ipykernel (>=5.3,<7.0)", "ipython (>=7.10,<8.0)", "matplotlib (>=3.0.3,<4.0)", "memory-profiler (>=0.50.0,<1.0)", "nbconvert (>=5.3.1,<6.0)", "nbformat (>=4.4,<5.0)", "nbsphinx (==0.8.1)", "nbstripout (>=0.4,<1.0)", "networkx (>=2.4,<3.0)", "openpyxl (>=3.0.3,<4.0)", "pandas-gbq (>=0.12.0,<1.0)", "pandas (>=0.24)", "plotly (>=4.8.0,<6.0)", "pyarrow (>=1.0,<7.0)", "pyproj (>=2.2.0,<3.0)", "pyspark (>=2.2,<4.0)", "recommonmark (==0.7.1)", "requests (>=2.20,<3.0)", "s3fs (>=0.3.0,<0.5)", "sphinx-autodoc-typehints (==1.11.1)", "sphinx-copybutton (==0.3.1)", "sphinx-rtd-theme (==0.4.1)", "sphinx (>=3.4.3,<3.5.0)", "tables (>=3.6,<4.0)", "tensorflow (>=2.0,<3.0)", "xlrd (>=1.0,<2.0)", "xlsxwriter (>=1.0,<2.0)", "dask[complete] (>=2.6,<3.0)", "dask (>=2021.10.0,<2022.01)"]
 api = ["requests (>=2.20,<3.0)"]
 "api.apidataset" = ["requests (>=2.20,<3.0)"]
 biosequence = ["biopython (>=1.73,<2.0)"]
 "biosequence.biosequencedataset" = ["biopython (>=1.73,<2.0)"]
-dask = ["dask[complete] (>=2021.10,<2022.0)"]
-"dask.parquetdataset" = ["dask[complete] (>=2021.10,<2022.0)"]
+"dask.parquetdataset" = ["dask[complete] (>=2.6,<3.0)", "dask (>=2021.10.0,<2022.01)"]
+dask = ["dask[complete] (>=2.6,<3.0)", "dask (>=2021.10.0,<2022.01)"]
 docs = ["docutils (==0.16)", "sphinx (>=3.4.3,<3.5.0)", "sphinx-rtd-theme (==0.4.1)", "nbsphinx (==0.8.1)", "nbstripout (>=0.4,<1.0)", "recommonmark (==0.7.1)", "sphinx-autodoc-typehints (==1.11.1)", "sphinx-copybutton (==0.3.1)", "ipykernel (>=5.3,<7.0)"]
-geopandas = ["geopandas (>=0.6.0,<1.0)", "pyproj (>=3.0,<4.0)"]
-"geopandas.geojsondataset" = ["geopandas (>=0.6.0,<1.0)", "pyproj (>=3.0,<4.0)"]
+geopandas = ["geopandas (>=0.6.0,<1.0)", "pyproj (>=2.2.0,<3.0)"]
+"geopandas.geojsondataset" = ["geopandas (>=0.6.0,<1.0)", "pyproj (>=2.2.0,<3.0)"]
 holoviews = ["holoviews (>=1.13.0,<1.14.0)"]
 "holoviews.holoviewswriter" = ["holoviews (>=1.13.0,<1.14.0)"]
-ipython = ["ipython (>=7.16.3,<7.17.0)", "ipython (>=7.31.1,<8.0)"]
+ipython = ["ipython (>=7.10,<8.0)"]
 matplotlib = ["matplotlib (>=3.0.3,<4.0)"]
 "matplotlib.matplotlibwriter" = ["matplotlib (>=3.0.3,<4.0)"]
 networkx = ["networkx (>=2.4,<3.0)"]
 "networkx.networkxdataset" = ["networkx (>=2.4,<3.0)"]
 notebook_templates = ["nbconvert (>=5.3.1,<6.0)", "nbformat (>=4.4,<5.0)"]
-pandas = ["SQLAlchemy (>=1.2,<2.0)", "lxml (>=4.6,<5.0)", "openpyxl (>=3.0.6,<4.0)", "pandas-gbq (>=0.12.0,<1.0)", "pandas (>=1.3,<2.0)", "pyarrow (>=1.0,<7.0)", "tables (>=3.6,<4.0)", "tables (>=3.6.0,<3.7.0)"]
-"pandas.csvdataset" = ["pandas (>=1.3,<2.0)"]
-"pandas.exceldataset" = ["pandas (>=1.3,<2.0)", "openpyxl (>=3.0.6,<4.0)"]
-"pandas.featherdataset" = ["pandas (>=1.3,<2.0)"]
-"pandas.gbqquerydataset" = ["pandas (>=1.3,<2.0)", "pandas-gbq (>=0.12.0,<1.0)"]
-"pandas.gbqtabledataset" = ["pandas (>=1.3,<2.0)", "pandas-gbq (>=0.12.0,<1.0)"]
-"pandas.genericdataset" = ["pandas (>=1.3,<2.0)"]
-"pandas.hdfdataset" = ["pandas (>=1.3,<2.0)", "tables (>=3.6,<4.0)", "tables (>=3.6.0,<3.7.0)"]
-"pandas.jsondataset" = ["pandas (>=1.3,<2.0)"]
-"pandas.parquetdataset" = ["pandas (>=1.3,<2.0)", "pyarrow (>=1.0,<7.0)"]
-"pandas.sqlquerydataset" = ["pandas (>=1.3,<2.0)", "SQLAlchemy (>=1.2,<2.0)"]
-"pandas.sqltabledataset" = ["pandas (>=1.3,<2.0)", "SQLAlchemy (>=1.2,<2.0)"]
-"pandas.xmldataset" = ["pandas (>=1.3,<2.0)", "lxml (>=4.6,<5.0)"]
-pillow = ["Pillow (>=9.0,<10.0)"]
-"pillow.imagedataset" = ["Pillow (>=9.0,<10.0)"]
-plotly = ["pandas (>=1.3,<2.0)", "plotly (>=4.8.0,<6.0)"]
+pandas = ["SQLAlchemy (>=1.2,<2.0)", "openpyxl (>=3.0.3,<4.0)", "pandas-gbq (>=0.12.0,<1.0)", "pandas (>=0.24)", "pyarrow (>=1.0,<7.0)", "tables (>=3.6,<4.0)", "xlrd (>=1.0,<2.0)", "xlsxwriter (>=1.0,<2.0)"]
+"pandas.appendableexceldataset" = ["pandas (>=0.24)", "openpyxl (>=3.0.3,<4.0)"]
+"pandas.csvdataset" = ["pandas (>=0.24)"]
+"pandas.exceldataset" = ["pandas (>=0.24)", "xlrd (>=1.0,<2.0)", "xlsxwriter (>=1.0,<2.0)"]
+"pandas.featherdataset" = ["pandas (>=0.24)"]
+"pandas.gbqquerydataset" = ["pandas (>=0.24)", "pandas-gbq (>=0.12.0,<1.0)"]
+"pandas.gbqtabledataset" = ["pandas (>=0.24)", "pandas-gbq (>=0.12.0,<1.0)"]
+"pandas.genericdataset" = ["pandas (>=0.24)"]
+"pandas.hdfdataset" = ["pandas (>=0.24)", "tables (>=3.6,<4.0)"]
+"pandas.jsondataset" = ["pandas (>=0.24)"]
+"pandas.parquetdataset" = ["pandas (>=0.24)", "pyarrow (>=1.0,<7.0)"]
+"pandas.sqlquerydataset" = ["pandas (>=0.24)", "SQLAlchemy (>=1.2,<2.0)"]
+"pandas.sqltabledataset" = ["pandas (>=0.24)", "SQLAlchemy (>=1.2,<2.0)"]
+pillow = ["Pillow (>=8.0,<9.0)"]
+"pillow.imagedataset" = ["Pillow (>=8.0,<9.0)"]
+plotly = ["pandas (>=0.24)", "plotly (>=4.8.0,<6.0)"]
 "plotly.jsondataset" = ["plotly (>=4.8.0,<6.0)"]
-"plotly.plotlydataset" = ["pandas (>=1.3,<2.0)", "plotly (>=4.8.0,<6.0)"]
+"plotly.plotlydataset" = ["pandas (>=0.24)", "plotly (>=4.8.0,<6.0)"]
 profilers = ["memory-profiler (>=0.50.0,<1.0)"]
 spark = ["delta-spark (>=1.0,<2.0)", "hdfs (>=2.5.8,<3.0)", "pyspark (>=2.2,<4.0)", "s3fs (>=0.3.0,<0.5)"]
 "spark.deltatabledataset" = ["pyspark (>=2.2,<4.0)", "hdfs (>=2.5.8,<3.0)", "s3fs (>=0.3.0,<0.5)", "delta-spark (>=1.0,<2.0)"]
@@ -815,12 +812,9 @@ spark = ["delta-spark (>=1.0,<2.0)", "hdfs (>=2.5.8,<3.0)", "pyspark (>=2.2,<4.0
 "spark.sparkjdbcdataset" = ["pyspark (>=2.2,<4.0)", "hdfs (>=2.5.8,<3.0)", "s3fs (>=0.3.0,<0.5)"]
 tensorflow = ["tensorflow (>=2.0,<3.0)"]
 "tensorflow.tensorflowmodeldataset" = ["tensorflow (>=2.0,<3.0)"]
-yaml = ["PyYAML (>=4.2,<6.0)", "pandas (>=1.3,<2.0)"]
-"yaml.yamldataset" = ["pandas (>=1.3,<2.0)", "PyYAML (>=4.2,<6.0)"]
+yaml = ["PyYAML (>=4.2,<6.0)", "pandas (>=0.24)"]
+"yaml.yamldataset" = ["pandas (>=0.24)", "PyYAML (>=4.2,<6.0)"]
 
-[package.source]
-type = "url"
-url = "https://github.com/kedro-org/kedro/archive/develop.zip"
 [[package]]
 name = "mailchecker"
 version = "4.1.11"
@@ -935,14 +929,14 @@ python-versions = ">=3.8"
 
 [[package]]
 name = "packaging"
-version = "21.3"
+version = "20.9"
 description = "Core utilities for Python packages"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [package.dependencies]
-pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
+pyparsing = ">=2.0.2"
 
 [[package]]
 name = "pathspec"
@@ -965,7 +959,7 @@ tomli = {version = ">=1.1.0", markers = "python_version >= \"3.6\""}
 
 [[package]]
 name = "phonenumbers"
-version = "8.12.42"
+version = "8.12.43"
 description = "Python version of Google's common library for parsing, formatting, storing and validating international phone numbers."
 category = "main"
 optional = false
@@ -973,7 +967,7 @@ python-versions = "*"
 
 [[package]]
 name = "pip-tools"
-version = "6.5.0"
+version = "6.5.1"
 description = "pip-tools keeps your pinned dependencies fresh."
 category = "main"
 optional = false
@@ -989,7 +983,7 @@ testing = ["pytest", "pytest-rerunfailures", "pytest-xdist"]
 
 [[package]]
 name = "platformdirs"
-version = "2.4.1"
+version = "2.5.0"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 category = "dev"
 optional = false
@@ -1001,15 +995,14 @@ test = ["appdirs (==1.4.4)", "pytest (>=6)", "pytest-cov (>=2.7)", "pytest-mock 
 
 [[package]]
 name = "pluggy"
-version = "1.0.0"
+version = "0.13.1"
 description = "plugin and hook calling mechanisms for python"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [package.extras]
 dev = ["pre-commit", "tox"]
-testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "ply"
@@ -1145,7 +1138,7 @@ diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pytest"
-version = "7.0.0"
+version = "7.0.1"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
@@ -1166,7 +1159,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.
 
 [[package]]
 name = "pytest-cases"
-version = "3.6.8"
+version = "3.6.9"
 description = "Separate test code from test cases in pytest."
 category = "dev"
 optional = false
@@ -1301,7 +1294,7 @@ use_chardet_on_py3 = ["chardet (>=3.0.2,<5)"]
 
 [[package]]
 name = "rich"
-version = "11.1.0"
+version = "11.2.0"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 category = "main"
 optional = false
@@ -1328,7 +1321,7 @@ dev = ["build", "pytest", "pytest-timeout"]
 
 [[package]]
 name = "ruamel.yaml"
-version = "0.17.20"
+version = "0.17.21"
 description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
 category = "main"
 optional = false
@@ -1482,7 +1475,7 @@ test = ["pytest"]
 
 [[package]]
 name = "typing-extensions"
-version = "4.0.1"
+version = "4.1.1"
 description = "Backported and Experimental Type Hints for Python 3.6+"
 category = "main"
 optional = false
@@ -1503,21 +1496,21 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "virtualenv"
-version = "20.13.1"
+version = "20.4.4"
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
 
 [package.dependencies]
+appdirs = ">=1.4.3,<2"
 distlib = ">=0.3.1,<1"
-filelock = ">=3.2,<4"
-platformdirs = ">=2,<3"
+filelock = ">=3.0.0,<4"
 six = ">=1.9.0,<2"
 
 [package.extras]
-docs = ["proselint (>=0.10.2)", "sphinx (>=3)", "sphinx-argparse (>=0.2.5)", "sphinx-rtd-theme (>=0.4.3)", "towncrier (>=21.3)"]
-testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", "pytest (>=4)", "pytest-env (>=0.6.2)", "pytest-freezegun (>=0.4.1)", "pytest-mock (>=2)", "pytest-randomly (>=1)", "pytest-timeout (>=1)", "packaging (>=20.0)"]
+docs = ["proselint (>=0.10.2)", "sphinx (>=3)", "sphinx-argparse (>=0.2.5)", "sphinx-rtd-theme (>=0.4.3)", "towncrier (>=19.9.0rc1)"]
+testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", "pytest (>=4)", "pytest-env (>=0.6.2)", "pytest-freezegun (>=0.4.1)", "pytest-mock (>=2)", "pytest-randomly (>=1)", "pytest-timeout (>=1)", "packaging (>=20.0)", "xonsh (>=0.9.16)"]
 
 [[package]]
 name = "voluptuous"
@@ -1580,8 +1573,8 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.8, <3.10"
-content-hash = "6195ce9c2ad23a2120c8064a80702715416faf32bd51a327188fae4f61c97955"
+python-versions = ">=3.8, <3.9"
+content-hash = "de14a214206a8044b11de6cade0167ef77f455d87ace020786707aba55b5593a"
 
 [metadata.files]
 aiohttp = [
@@ -1775,8 +1768,8 @@ chardet = [
     {file = "chardet-4.0.0.tar.gz", hash = "sha256:0d6f53a15db4120f2b08c94f11e7d93d2c911ee118b6b30a04ec3ee8310179fa"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.11.tar.gz", hash = "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"},
-    {file = "charset_normalizer-2.0.11-py3-none-any.whl", hash = "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45"},
+    {file = "charset-normalizer-2.0.12.tar.gz", hash = "sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"},
+    {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
 ]
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
@@ -1863,8 +1856,8 @@ cryptography = [
     {file = "cryptography-36.0.1.tar.gz", hash = "sha256:53e5c1dc3d7a953de055d77bef2ff607ceef7a2aac0353b5d630ab67f7423638"},
 ]
 decopatch = [
-    {file = "decopatch-1.4.8-py2.py3-none-any.whl", hash = "sha256:29a74d5d753423b188d5b537532da4f4b88e33ddccb95a8a20a5eff5b13265d4"},
-    {file = "decopatch-1.4.8.tar.gz", hash = "sha256:c66b0815f15db04de7bb52b0b276432b76b7346fe7046f28033f48a14340d144"},
+    {file = "decopatch-1.4.9-py2.py3-none-any.whl", hash = "sha256:cd9a49f749c26ea8e5fc567b0ccc04f61fb83ebd6eea0834e426f327399a7757"},
+    {file = "decopatch-1.4.9.tar.gz", hash = "sha256:b5882c8cf0d5b01d218b4e04f6762d07b3287420ea509706f59971c3d6fec56f"},
 ]
 dictdiffer = [
     {file = "dictdiffer-0.9.0-py2.py3-none-any.whl", hash = "sha256:442bfc693cfcadaf46674575d2eba1c53b42f5e404218ca2c2ff549f2df56595"},
@@ -1999,7 +1992,8 @@ fsspec = [
     {file = "fsspec-2021.11.1.tar.gz", hash = "sha256:03683e606651d5e4bd9180525d57477bd5430e5dc68d2e459835dc14cecc3dd4"},
 ]
 ftfy = [
-    {file = "ftfy-6.0.3.tar.gz", hash = "sha256:ba71121a9c8d7790d3e833c6c1021143f3e5c4118293ec3afb5d43ed9ca8e72b"},
+    {file = "ftfy-6.1.1-py3-none-any.whl", hash = "sha256:0ffd33fce16b54cccaec78d6ec73d95ad370e5df5a25255c8966a6147bd667ca"},
+    {file = "ftfy-6.1.1.tar.gz", hash = "sha256:bfc2019f84fcd851419152320a6375604a0f1459c281b5b199b2cd0d2e727f8f"},
 ]
 funcy = [
     {file = "funcy-1.17-py2.py3-none-any.whl", hash = "sha256:ba7af5e58bfc69321aaf860a1547f18d35e145706b95d1b3c966abc4f0b60309"},
@@ -2024,8 +2018,8 @@ grandalf = [
     {file = "grandalf-0.6.tar.gz", hash = "sha256:7471db231bd7338bc0035b16edf0dc0c900c82d23060f4b4d0c4304caedda6e4"},
 ]
 identify = [
-    {file = "identify-2.4.8-py2.py3-none-any.whl", hash = "sha256:a55bdd671b6063eb837af938c250ec00bba6e610454265133b0d2db7ae718d0f"},
-    {file = "identify-2.4.8.tar.gz", hash = "sha256:97e839c1779f07011b84c92af183e1883d9745d532d83412cca1ca76d3808c1c"},
+    {file = "identify-2.4.10-py2.py3-none-any.whl", hash = "sha256:7d10baf6ba6f1912a0a49f4c1c2c49fa1718765c3a37d72d13b07779567c5b85"},
+    {file = "identify-2.4.10.tar.gz", hash = "sha256:e12b2aea3cf108de73ae055c2260783bde6601de09718f6768cf8e9f6f6322a6"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -2063,7 +2057,10 @@ jupyter-core = [
     {file = "jupyter_core-4.9.1-py3-none-any.whl", hash = "sha256:1c091f3bbefd6f2a8782f2c1db662ca8478ac240e962ae2c66f0b87c818154ea"},
     {file = "jupyter_core-4.9.1.tar.gz", hash = "sha256:dce8a7499da5a53ae3afd5a9f4b02e5df1d57250cf48f3ad79da23b4778cd6fa"},
 ]
-kedro = []
+kedro = [
+    {file = "kedro-0.17.6-py3-none-any.whl", hash = "sha256:e6b3a483cfde955e5df2ebec23b2ae35dac269175e50738c813de9a3fbd0e84c"},
+    {file = "kedro-0.17.6.tar.gz", hash = "sha256:2173693c4dffa1a5570499ac70fa6595943f8de824679300c3267e8ce7acff60"},
+]
 mailchecker = [
     {file = "mailchecker-4.1.11.tar.gz", hash = "sha256:3e63e5d8fef62bd5586f2f8a92de0b3865d83edee786ee372c49aebf885ad720"},
 ]
@@ -2235,8 +2232,8 @@ numpy = [
     {file = "numpy-1.22.2.zip", hash = "sha256:076aee5a3763d41da6bef9565fdf3cb987606f567cd8b104aded2b38b7b47abf"},
 ]
 packaging = [
-    {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
-    {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
+    {file = "packaging-20.9-py2.py3-none-any.whl", hash = "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"},
+    {file = "packaging-20.9.tar.gz", hash = "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5"},
 ]
 pathspec = [
     {file = "pathspec-0.9.0-py2.py3-none-any.whl", hash = "sha256:7d15c4ddb0b5c802d161efc417ec1a2558ea2653c2e8ad9c19098201dc1c993a"},
@@ -2247,20 +2244,20 @@ pep517 = [
     {file = "pep517-0.12.0.tar.gz", hash = "sha256:931378d93d11b298cf511dd634cf5ea4cb249a28ef84160b3247ee9afb4e8ab0"},
 ]
 phonenumbers = [
-    {file = "phonenumbers-8.12.42-py2.py3-none-any.whl", hash = "sha256:19f353604ef09b19165ebfc86f0a9e54df75939480c2508770f7d1a4adc8e194"},
-    {file = "phonenumbers-8.12.42.tar.gz", hash = "sha256:8b54871ed64ecfce494a078e9d56b363c23e24c5916dfd89e84b985a18955bee"},
+    {file = "phonenumbers-8.12.43-py2.py3-none-any.whl", hash = "sha256:386ea186019e8f4d646e48e9da9c3e786c254cfb1bd541cc0a8d0a2ccb85d3ca"},
+    {file = "phonenumbers-8.12.43.tar.gz", hash = "sha256:1c8270a2e257d6c65458a42283f82d3eca7f7b9d925454a6966e2f04df75e1cf"},
 ]
 pip-tools = [
-    {file = "pip-tools-6.5.0.tar.gz", hash = "sha256:d14ea4fc2c118db2a6af65a4345a8b9b355e792aedad6bf64dd3eb97c5fc5fee"},
-    {file = "pip_tools-6.5.0-py3-none-any.whl", hash = "sha256:9cf69a020e3c208a7a1bcc78cbfd436dab323efc187919df6182eca98efbe3f2"},
+    {file = "pip-tools-6.5.1.tar.gz", hash = "sha256:80f562aa699fc76a424539697e0bef41e490a050e57a6a21468531981a9d419e"},
+    {file = "pip_tools-6.5.1-py3-none-any.whl", hash = "sha256:80f1cfc7156e4a4465b1a46a6bb3599587909537db1a149cf3a6b73eed979ee4"},
 ]
 platformdirs = [
-    {file = "platformdirs-2.4.1-py3-none-any.whl", hash = "sha256:1d7385c7db91728b83efd0ca99a5afb296cab9d0ed8313a45ed8ba17967ecfca"},
-    {file = "platformdirs-2.4.1.tar.gz", hash = "sha256:440633ddfebcc36264232365d7840a970e75e1018d15b4327d11f91909045fda"},
+    {file = "platformdirs-2.5.0-py3-none-any.whl", hash = "sha256:30671902352e97b1eafd74ade8e4a694782bd3471685e78c32d0fdfd3aa7e7bb"},
+    {file = "platformdirs-2.5.0.tar.gz", hash = "sha256:8ec11dfba28ecc0715eb5fb0147a87b1bf325f349f3da9aab2cd6b50b96b692b"},
 ]
 pluggy = [
-    {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
-    {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
+    {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
+    {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
 ]
 ply = [
     {file = "ply-3.11-py2.py3-none-any.whl", hash = "sha256:096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce"},
@@ -2387,12 +2384,12 @@ pyparsing = [
     {file = "pyparsing-3.0.7.tar.gz", hash = "sha256:18ee9022775d270c55187733956460083db60b37d0d0fb357445f3094eed3eea"},
 ]
 pytest = [
-    {file = "pytest-7.0.0-py3-none-any.whl", hash = "sha256:42901e6bd4bd4a0e533358a86e848427a49005a3256f657c5c8f8dd35ef137a9"},
-    {file = "pytest-7.0.0.tar.gz", hash = "sha256:dad48ffda394e5ad9aa3b7d7ddf339ed502e5e365b1350e0af65f4a602344b11"},
+    {file = "pytest-7.0.1-py3-none-any.whl", hash = "sha256:9ce3ff477af913ecf6321fe337b93a2c0dcf2a0a1439c43f5452112c1e4280db"},
+    {file = "pytest-7.0.1.tar.gz", hash = "sha256:e30905a0c131d3d94b89624a1cc5afec3e0ba2fbdb151867d8e0ebd49850f171"},
 ]
 pytest-cases = [
-    {file = "pytest-cases-3.6.8.tar.gz", hash = "sha256:d423e87b30e1080cc162d86c72bfa35861cccfe3539125e81c68ba142ab974bc"},
-    {file = "pytest_cases-3.6.8-py2.py3-none-any.whl", hash = "sha256:247b8d572a1003b0c90c114394df2980ed757574c8529f38e3a66b68f0caeadf"},
+    {file = "pytest-cases-3.6.9.tar.gz", hash = "sha256:05ff5f6af8651dc1a3f277f52714e4323a68f213327c11e03028a539c20bd929"},
+    {file = "pytest_cases-3.6.9-py2.py3-none-any.whl", hash = "sha256:38fda5ed75ff3218b1ccb59a2a11381682b62f556299c26c7af1837f04618f41"},
 ]
 pytest-cov = [
     {file = "pytest-cov-3.0.0.tar.gz", hash = "sha256:e7f0f5b1617d2210a2cabc266dfe2f4c75a8d32fb89eafb7ad9d06f6d076d470"},
@@ -2499,16 +2496,16 @@ requests = [
     {file = "requests-2.27.1.tar.gz", hash = "sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61"},
 ]
 rich = [
-    {file = "rich-11.1.0-py3-none-any.whl", hash = "sha256:365ebcdbfb3aa8d4b0ed2490e0fbf7b886a39d14eb7ea5fb7aece950835e1eed"},
-    {file = "rich-11.1.0.tar.gz", hash = "sha256:43e03d8eec12e21beaecc22c828a41c4247356414a12d5879834863d4ad53816"},
+    {file = "rich-11.2.0-py3-none-any.whl", hash = "sha256:d5f49ad91fb343efcae45a2b2df04a9755e863e50413623ab8c9e74f05aee52b"},
+    {file = "rich-11.2.0.tar.gz", hash = "sha256:1a6266a5738115017bb64a66c59c717e7aa047b3ae49a011ede4abdeffc6536e"},
 ]
 rope = [
     {file = "rope-0.21.1-py3-none-any.whl", hash = "sha256:7fa433eb946bf806a419a3da354cd9b56d565cadf7159952c8e71c72d4b1a8ec"},
     {file = "rope-0.21.1.tar.gz", hash = "sha256:4fe61ea25ca64f1819be57fbb44ee07ca98b3dce08a0ceaaf3c6d6166b603f7f"},
 ]
 "ruamel.yaml" = [
-    {file = "ruamel.yaml-0.17.20-py3-none-any.whl", hash = "sha256:810eef9c46523a3f77479c66267a4708255ebe806a2d540078408c2227f011af"},
-    {file = "ruamel.yaml-0.17.20.tar.gz", hash = "sha256:4b8a33c1efb2b443a93fcaafcfa4d2e445f8e8c29c528d9f5cdafb7cc9e4004c"},
+    {file = "ruamel.yaml-0.17.21-py3-none-any.whl", hash = "sha256:742b35d3d665023981bd6d16b3d24248ce5df75fdb4e2924e93a05c1f8b61ca7"},
+    {file = "ruamel.yaml-0.17.21.tar.gz", hash = "sha256:8b7ce697a2f212752a35c1ac414471dc16c424c9573be4926b56ff3f5d23b7af"},
 ]
 "ruamel.yaml.clib" = [
     {file = "ruamel.yaml.clib-0.2.6-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:cfdb9389d888c5b74af297e51ce357b800dd844898af9d4a547ffc143fa56751"},
@@ -2625,16 +2622,16 @@ traitlets = [
     {file = "traitlets-5.1.1.tar.gz", hash = "sha256:059f456c5a7c1c82b98c2e8c799f39c9b8128f6d0d46941ee118daace9eb70c7"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-4.0.1-py3-none-any.whl", hash = "sha256:7f001e5ac290a0c0401508864c7ec868be4e701886d5b573a9528ed3973d9d3b"},
-    {file = "typing_extensions-4.0.1.tar.gz", hash = "sha256:4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e"},
+    {file = "typing_extensions-4.1.1-py3-none-any.whl", hash = "sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2"},
+    {file = "typing_extensions-4.1.1.tar.gz", hash = "sha256:1a9462dcc3347a79b1f1c0271fbe79e844580bb598bafa1ed208b94da3cdcd42"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.8-py2.py3-none-any.whl", hash = "sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed"},
     {file = "urllib3-1.26.8.tar.gz", hash = "sha256:0e7c33d9a63e7ddfcb86780aac87befc2fbddf46c58dbb487e0855f7ceec283c"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.13.1-py2.py3-none-any.whl", hash = "sha256:45e1d053cad4cd453181ae877c4ffc053546ae99e7dd049b9ff1d9be7491abf7"},
-    {file = "virtualenv-20.13.1.tar.gz", hash = "sha256:e0621bcbf4160e4e1030f05065c8834b4e93f4fcc223255db2a823440aca9c14"},
+    {file = "virtualenv-20.4.4-py2.py3-none-any.whl", hash = "sha256:a935126db63128861987a7d5d30e23e8ec045a73840eeccb467c148514e29535"},
+    {file = "virtualenv-20.4.4.tar.gz", hash = "sha256:09c61377ef072f43568207dc8e46ddeac6bcdcaf288d49011bda0e7f4d38c4a2"},
 ]
 voluptuous = [
     {file = "voluptuous-0.12.2.tar.gz", hash = "sha256:4db1ac5079db9249820d49c891cb4660a6f8cae350491210abce741fabf56513"},
