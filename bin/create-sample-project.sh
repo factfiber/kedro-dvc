@@ -18,10 +18,7 @@ cd tmp
 mkdir $name
 cd $name
 git clone https://github.com/FactFiber/kedro-dvc.git -b $from_branch .
-echo ~~~~~~~~~~~~\n~~~~~~~~~~~~\n~~~~~~~~~~~~\n~~~~~~~~~~~~\n~~~~~~~~~~~~\n
 python3.8 -m venv env/$name
-ls
-echo ~~~~~~~~~~~~\n~~~~~~~~~~~~\n~~~~~~~~~~~~\n~~~~~~~~~~~~\n~~~~~~~~~~~~\n
 source env/$name/bin/activate
 pip install --upgrade pip  # ensure pip version >22
 pip install -r src/requirements.txt
