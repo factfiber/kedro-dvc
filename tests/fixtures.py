@@ -17,4 +17,9 @@ def fix_dvc_repo_session() -> DvcRepo:
 
 @fixture(name="dvc_repo")
 def fix_dvc_repo(dvc_repo_session) -> DvcRepo:
-    return  # take the repo from^ this and make a copy
+    subprocess.check_call(
+        f"cp -r {dvc_repo_session.root_dir} {dvc_repo_session.root_dir}_1",
+        shell=True,
+    )
+    dvc_repo_session.root_dir += "_1"
+    return dvc_repo_session
