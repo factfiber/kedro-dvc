@@ -71,7 +71,7 @@ def fix_empty_repo_session(empty_kedro_repo_session: str, dvc_repo_session: DvcR
         os.chdir(prev_dir)
 
 @fixture(name="empty_repo", scope="session")
-def fix_empty_repo_session(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
+def fix_empty_repo(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
     with tempfile.TemporaryDirectory() as dir:
         empty_repo = DvcRepo(root_dir=dir)
         shutil.copytree(empty_repo_session.root_dir, dir)
