@@ -9,7 +9,7 @@ from pytest_cases import fixture
 
 
 @fixture(name="dvc_repo_session", scope="session")
-def fix_dvc_repo_session() -> DvcRepo:
+def fix_dvc_repo_session() -> Iterator[DvcRepo]:
     with tempfile.TemporaryDirectory() as dir:
         subprocess.check_call(["git", "init"], cwd=dir)
         dvc = DvcRepo.init(dir, subdir=True)
@@ -22,9 +22,9 @@ def fix_dvc_repo_session() -> DvcRepo:
         os.chdir(prev_dir)
 
 @fixture(name="dvc_repo")
-def fix_dvc_repo(dvc_repo_session) -> DvcRepo:
+def fix_dvc_repo(dvc_repo_session) -> Iterator[DvcRepo]:
     with tempfile.TemporaryDirectory() as dir:
-        dvc_repo = copy.deepcopy(dvc_repo_session)
+        dvc_repo = DvcRepo(root_dir=dir)
         dvc_repo.root_dir = dir
         shutil.copytree(dvc_repo_session.root_dir, dvc_repo.root_dir)
         prev_dir = os.getcwd()
@@ -32,10 +32,11 @@ def fix_dvc_repo(dvc_repo_session) -> DvcRepo:
 
         yield dvc_repo
         
+        dvc_repo.close()
         os.chdir(prev_dir)
 
-@fixture(name="empty_repo_session", scope="session")
-def fix_empty_repo_session() -> str:
+@fixture(name="empty_kedro_repo_session", scope="session")
+def fix_empty_kedro_repo_session() -> Iterator[str]:
     with tempfile.TemporaryDirectory() as dir:
         # Might be able to do this from python, not sure
         subprocess.check_call(
@@ -54,16 +55,30 @@ def fix_empty_repo_session() -> str:
 
         os.chdir(prev_dir)
 
-@fixture(name="empty_repo_session")
-def fix_empty_repo(empty_repo_session) -> str:
+@fixture(name="empty_repo_session", scope="session")
+def fix_empty_repo_session(empty_kedro_repo_session: str, dvc_repo_session: DvcRepo) -> Iterator[DvcRepo]:
     with tempfile.TemporaryDirectory() as dir:
-        empty_repo = dir
-        shutil.copytree(empty_repo_session, empty_repo)
+        empty_repo = DvcRepo(root_dir=dir)
+        shutil.copytree(dvc_repo_session.root_dir, dir)
+        shutil.copytree(empty_kedro_repo_session, dir)
+        empty_repo.git.add_commit(".", "feat: first commit of empty repo")
         prev_dir = os.getcwd()
-        os.chdir(empty_repo)
+        os.chdir(dir)
 
         yield empty_repo
 
+        empty_repo.close()
         os.chdir(prev_dir)
 
+@fixture(name="empty_repo", scope="session")
+def fix_empty_repo_session(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
+    with tempfile.TemporaryDirectory() as dir:
+        empty_repo = DvcRepo(root_dir=dir)
+        shutil.copytree(empty_repo_session.root_dir, dir)
+        prev_dir = os.getcwd()
+        os.chdir(dir)
 
+        yield empty_repo
+
+        empty_repo.close()
+        os.chdir(prev_dir)
