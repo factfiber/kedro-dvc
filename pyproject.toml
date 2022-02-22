@@ -9,7 +9,7 @@ packages = [{include = "kedro_dvc", from = "src"}]
 
 [tool.poetry.dependencies]
 dvc = "^2.9.3"
-kedro = ">=0.17.6, <0.19"
+kedro = ">=0.17.7, <0.19"
 numpy = "^1.22.2"
 python = ">=3.8, <3.9"
 
@@ -28,7 +28,15 @@ build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@master"]
 
 [tool.poetry-exec-plugin.commands]
+"build:docker" = "docker build -t factfiber/kedro-dvc-test ."
 create-sample-project = "bin/create-sample-project.sh"
+"run:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest"
+"test-watch-cov:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing"
+"test-watch-cov:local" = "poetry run ptw -- --last-failed --new-first  --cov --cov-report term-missing"
+"test-watch:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
+"test-watch:local" = "poetry run ptw -- --last-failed --new-first"
+"test:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
+"test:local" = "poetry run ptw -- --last-failed --new-first"
 
 # NB poetry does not (yet?) support PEP 621
 [tool.poetry.plugins."kedro.project_commands"]
