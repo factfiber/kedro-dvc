@@ -45,21 +45,21 @@ jobs:
       run: |
         python -m poetry run pytest -v tests --cov-fail-under=100
     
-  Release:
-    needs: Quality
-    runs-on: ubuntu-latest
-    concurrency: release
-    # https://github.community/t/how-do-i-specify-job-dependency-running-in-another-workflow/16482
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && !contains(github.event.head_commit.message, 'chore(release):')
+  # Release:
+  #   needs: Quality
+  #   runs-on: ubuntu-latest
+  #   concurrency: release
+  #   # https://github.community/t/how-do-i-specify-job-dependency-running-in-another-workflow/16482
+  #   if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && !contains(github.event.head_commit.message, 'chore(release):')
 
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #     with:
+  #       fetch-depth: 0
 
-    - name: Python Semantic Release
-      uses: relekang/python-semantic-release@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository_username: __token__
-        repository_password: ${{ secrets.PYPI_TOKEN }}
+  #   - name: Python Semantic Release
+  #     uses: relekang/python-semantic-release@master
+  #     with:
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #       repository_username: __token__
+  #       repository_password: ${{ secrets.PYPI_TOKEN }}
