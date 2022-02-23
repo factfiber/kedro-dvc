@@ -22,6 +22,7 @@ pre-commit = "^2.17.0"
 pytest = "^7.0.0"
 pytest-cases = "^3.6.8"
 pytest-cov = "^3.0.0"
+pytest-watch = "^4.2.0"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
@@ -30,12 +31,12 @@ requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@
 [tool.poetry-exec-plugin.commands]
 "build:docker" = "docker build -t factfiber/kedro-dvc-test ."
 create-sample-project = "bin/create-sample-project.sh"
-"run:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest"
-"test-watch-cov:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing"
+"run:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest"
+"test-watch-cov:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing"
 "test-watch-cov:local" = "poetry run ptw -- --last-failed --new-first  --cov --cov-report term-missing"
-"test-watch:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
+"test-watch:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
 "test-watch:local" = "poetry run ptw -- --last-failed --new-first"
-"test:docker" = "docker run --rm -it -v src:app/src -v tests:app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
+"test:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
 "test:local" = "poetry run ptw -- --last-failed --new-first"
 
 # NB poetry does not (yet?) support PEP 621
