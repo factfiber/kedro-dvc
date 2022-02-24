@@ -1,4 +1,4 @@
-# Ketro-DVC
+# Kedro-DVC
 
 Kedro-DVC integration to track and distribute experiments.
 
