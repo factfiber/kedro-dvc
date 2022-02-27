@@ -4,7 +4,6 @@ FROM python:3.8.12-slim-buster
 RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install git -y
-RUN apt-get install python3-pip -y
 RUN pip install --upgrade pip
 RUN pip install poetry-exec-plugin
 
@@ -22,3 +21,4 @@ ADD . /app
 ADD ./bin/create-sample-project.sh bin/create-sample-project.sh
 RUN sed -i.bak 's/\r$//' bin/create-sample-project.sh
 RUN poetry exec create-sample-project example sample-project-basic
+ENTRYPOINT [ "/bin/bash" ]

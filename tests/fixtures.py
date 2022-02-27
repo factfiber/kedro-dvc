@@ -1,4 +1,6 @@
+import contextlib
 import os
+import pathlib
 import shutil
 import subprocess
 import tempfile
@@ -7,82 +9,113 @@ from typing import Iterator
 from dvc.repo import Repo as DvcRepo
 from pytest_cases import fixture
 
+from kedro_dvc.create_sample_project import create_sample_project
 
-@fixture(name="dvc_repo_session", scope="session")  # type: ignore
-def fix_dvc_repo_session() -> Iterator[DvcRepo]:
+
+@contextlib.contextmanager
+def to_tmp_dir() -> Iterator[pathlib.Path]:
+    """
+    Create temp directory, yield context within it.
+    """
     with tempfile.TemporaryDirectory() as dir:
-        subprocess.check_call(["git", "init"], cwd=dir)
-        dvc = DvcRepo.init(dir, subdir=True)
         prev_dir = os.getcwd()
         os.chdir(dir)
+        try:
+            yield pathlib.Path(dir)
+        finally:
+            os.chdir(prev_dir)
 
+
+@fixture(name="tmp_dir")  # type: ignore
+def fix_tmp_dir() -> Iterator[pathlib.Path]:
+    """
+    Test in temp directory
+    """
+    with to_tmp_dir() as dir:
+        yield dir
+
+
+@fixture(name="tmp_dir_session")  # type: ignore
+def fix_tmp_dir_session() -> Iterator[pathlib.Path]:
+    """
+    Test in temp directory.
+
+    Session scoped.
+    """
+    with to_tmp_dir() as dir:
+        yield dir
+
+
+@fixture(name="dvc_repo_session", scope="session")  # type: ignore
+def fix_dvc_repo_session(tmp_dir_session: pathlib.Path) -> Iterator[DvcRepo]:
+    """
+    Create dvc repo; test cwd will be within repo dir.
+    """
+    subprocess.check_call(["git", "init"])
+    dvc = DvcRepo.init(".", subdir=True)
+    try:
         yield dvc
-
+    finally:
         dvc.close()
-        os.chdir(prev_dir)
 
 
 @fixture(name="dvc_repo")  # type: ignore
 def fix_dvc_repo(dvc_repo_session: DvcRepo) -> Iterator[DvcRepo]:
-    with tempfile.TemporaryDirectory() as dir:
+    """
+    Create dvc repo (copying session repo); cwd within repo.
+    """
+    with to_tmp_dir() as dir:
         dvc_repo = DvcRepo(root_dir=dir)
-        dvc_repo.root_dir = dir
         shutil.copytree(dvc_repo_session.root_dir, dvc_repo.root_dir)
-        prev_dir = os.getcwd()
-        os.chdir(dvc_repo.root_dir)
-
-        yield dvc_repo
-
-        dvc_repo.close()
-        os.chdir(prev_dir)
+        try:
+            yield dvc_repo
+        finally:
+            dvc_repo.close()
 
 
 @fixture(name="empty_kedro_repo_session", scope="session")  # type: ignore
-def fix_empty_kedro_repo_session() -> Iterator[str]:
-    with tempfile.TemporaryDirectory() as dir:
-        # Might be able to do this from python, not sure
-        args = "test-project sample-project-basic"
-        subprocess.check_call(
-            f"poetry exec create-sample-project {args}",
-            shell=True,
-        )
-        subprocess.check_call(f"mv tmp/name {dir}/tmp/name", shell=True)
-        subprocess.check_call(["git", "init"], cwd=dir)
-        prev_dir = os.getcwd()
-        os.chdir(dir)
+def fix_empty_kedro_repo_session() -> Iterator[pathlib.Path]:
+    """
+    Create sample kedro project.
 
+    Session scoped.
+    """
+    with to_tmp_dir() as dir:
+        create_sample_project("test")
+        shutil.move("tmp/test", ".")
+        shutil.rmtree("tmp")
         yield dir
-
-        os.chdir(prev_dir)
 
 
 @fixture(name="empty_repo_session", scope="session")  # type: ignore
 def fix_empty_repo_session(
-    empty_kedro_repo_session: str, dvc_repo_session: DvcRepo
+    empty_kedro_repo_session: pathlib.Path, dvc_repo_session: DvcRepo
 ) -> Iterator[DvcRepo]:
-    with tempfile.TemporaryDirectory() as dir:
-        empty_repo = DvcRepo(root_dir=dir)
+    """
+    Create kedro sample project with dvc repo; cwd inside.
+
+    Session scoped.
+    """
+    with to_tmp_dir() as dir:
         shutil.copytree(dvc_repo_session.root_dir, dir)
         shutil.copytree(empty_kedro_repo_session, dir)
+        empty_repo = DvcRepo(root_dir=dir)
         empty_repo.git.add_commit(".", "feat: first commit of empty repo")
-        prev_dir = os.getcwd()
-        os.chdir(dir)
-
-        yield empty_repo
-
-        empty_repo.close()
-        os.chdir(prev_dir)
+        try:
+            yield dir
+        finally:
+            empty_repo.close()
 
 
 @fixture(name="empty_repo", scope="session")  # type: ignore
 def fix_empty_repo(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
-    with tempfile.TemporaryDirectory() as dir:
-        empty_repo = DvcRepo(root_dir=dir)
+    """
+    Create kedro sample with dvc repo (copying session repo); cwd inside.
+    """
+    with to_tmp_dir() as dir:
         shutil.copytree(empty_repo_session.root_dir, dir)
-        prev_dir = os.getcwd()
-        os.chdir(dir)
-
-        yield empty_repo
-
-        empty_repo.close()
-        os.chdir(prev_dir)
+        dvc_repo = DvcRepo(root_dir=dir)
+        try:
+            yield dvc_repo
+        finally:
+            dvc_repo.close()
