@@ -84,3 +84,9 @@ testpaths = ["tests"]
 markers = [
   "slow: mark test as slow to run",
 ]
+
+[tool.mypy]
+allow_untyped_calls = false
+follow_imports = "skip"
+ignore_missing_imports = true
+plugins = "numpy.typing.mypy_plugin"
