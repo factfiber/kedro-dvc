@@ -38,7 +38,7 @@ def fix_tmp_dir() -> Iterator[pathlib.Path]:
         yield dir
 
 
-@fixture(name="tmp_dir_session")  # type: ignore
+@fixture(name="tmp_dir_session", scope="session")  # type: ignore
 def fix_tmp_dir_session() -> Iterator[pathlib.Path]:
     """
     Test in temp directory.
@@ -65,9 +65,8 @@ def to_memoized_dir(
     """
     with to_tmp_dir() as tmp_dir:
         save_cache: Optional[Callable[[], None]] = None
-        breakpoint()
-        if cache_dir.exists():
-            shutil.copytree(str(cache_dir), str(tmp_dir))
+        if cache_dir.exists() and len(os.listdir(cache_dir)) != 0:
+            shutil.copytree(str(cache_dir), str(tmp_dir), dirs_exist_ok=True)
         else:
             save_cache = cast(
                 Callable[[], None],
@@ -103,7 +102,7 @@ def fix_dvc_repo(dvc_repo_session: DvcRepo) -> Iterator[DvcRepo]:
     Create dvc repo (copying session repo); cwd within repo.
     """
     with to_tmp_dir() as dir:
-        shutil.copytree(dvc_repo_session.root_dir, dir)
+        shutil.copytree(dvc_repo_session.root_dir, dir, dirs_exist_ok=True)
         dvc_repo = DvcRepo(root_dir=dir)
         try:
             yield dvc_repo
@@ -121,7 +120,7 @@ def fix_empty_kedro_repo_session() -> Iterator[pathlib.Path]:
     cache_dir = CACHE_DIR / "empty_kedro_repo_session"
     with to_memoized_dir(cache_dir) as (dir, save_cache):
         if save_cache:
-            create_sample_project("test", kedro_dvc_path=APP_DIR)
+            create_sample_project("test", kd_repo_path=APP_DIR)
             shutil.move("tmp/test", ".")
             shutil.rmtree("tmp")
             save_cache()
@@ -140,10 +139,11 @@ def fix_empty_repo_session(
     cache_dir = CACHE_DIR / "empty_repo_session"
     with to_memoized_dir(cache_dir) as (dir, save_cache):
         if save_cache:
-            shutil.copytree(dvc_repo_session.root_dir, dir)
-            shutil.copytree(empty_kedro_repo_session, dir)
+            shutil.copytree(dvc_repo_session.root_dir, dir, dirs_exist_ok=True)
+            shutil.copytree(empty_kedro_repo_session, dir, dirs_exist_ok=True)
             empty_repo = DvcRepo(root_dir=dir)
-            empty_repo.git.add_commit(".", "feat: first commit of empty repo")
+            empty_repo.scm.add(".")
+            empty_repo.scm.commit("feat: first commit of empty repo")
             save_cache()
         else:
             empty_repo = DvcRepo(root_dir=dir)
@@ -159,7 +159,7 @@ def fix_empty_repo(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
     Create kedro sample with dvc repo (copying session repo); cwd inside.
     """
     with to_tmp_dir() as dir:
-        shutil.copytree(empty_repo_session.root_dir, dir)
+        shutil.copytree(empty_repo_session.root_dir, dir, dirs_exist_ok=True)
         dvc_repo = DvcRepo(root_dir=dir)
         try:
             yield dvc_repo

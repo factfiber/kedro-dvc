@@ -132,4 +132,4 @@ tmp
 .vscode
 
 # don't put fixture cache into repo
-tests/.cache-fixtures/
+tests/.fixture-cache/
