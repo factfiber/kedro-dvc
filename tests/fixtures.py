@@ -68,6 +68,7 @@ def to_memoized_dir(
         breakpoint()
         if cache_dir.exists():
             shutil.copytree(str(cache_dir), str(tmp_dir))
+        else:
             save_cache = cast(
                 Callable[[], None],
                 lambda: shutil.copytree(
