@@ -130,3 +130,6 @@ dmypy.json
 *.code-workspace
 tmp
 .vscode
+
+# don't put fixture cache into repo
+tests/.cache-fixtures/
