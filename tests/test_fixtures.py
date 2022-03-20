@@ -43,7 +43,7 @@ def test_to_tmp_dir() -> None:
     with to_tmp_dir() as tmp_dir:
         print(tmp_dir, cwd, os.getcwd())
 
-        assert str(tmp_dir) == os.getcwd()
+        assert tmp_dir.resolve() == pathlib.Path(os.getcwd()).resolve()
         assert cwd != os.getcwd()
         assert len(os.listdir(tmp_dir)) == 0
 
@@ -134,6 +134,7 @@ def test_fix_empty_repo(
 ) -> None:
     print("empty repo", os.getcwd(), empty_repo)
     assert fix_empty_repo_session._pytestfixturefunction.scope == "session"
+    assert fix_empty_repo._pytestfixturefunction.scope == "function"
     assert empty_repo_session != empty_repo
     assert os.listdir(empty_repo_session.root_dir) == os.listdir(
         empty_repo.root_dir

@@ -121,7 +121,8 @@ def fix_empty_kedro_repo_session() -> Iterator[pathlib.Path]:
     with to_memoized_dir(cache_dir) as (dir, save_cache):
         if save_cache:
             create_sample_project("test", kd_repo_path=APP_DIR)
-            shutil.move("tmp/test", ".")
+            for path in pathlib.Path("tmp/test").iterdir():
+                shutil.move(str(path), ".")
             shutil.rmtree("tmp")
             save_cache()
         yield dir
@@ -153,7 +154,7 @@ def fix_empty_repo_session(
             empty_repo.close()
 
 
-@fixture(name="empty_repo", scope="session")  # type: ignore
+@fixture(name="empty_repo")  # type: ignore
 def fix_empty_repo(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
     """
     Create kedro sample with dvc repo (copying session repo); cwd inside.
