@@ -76,7 +76,7 @@ def create_sample_project(
         # make sure we leave shell, return to original directory after finished
         try:
             subprocess.call(["deactivate"])
-        except FileNotFoundError:
+        except FileNotFoundError:  # pragma: no cover
             pass
         os.chdir("../..")
 

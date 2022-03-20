@@ -7,9 +7,10 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     """
     parser.addoption("--fast", action="store_true")
     parser.addoption("--fixture-cache-clear", action="store_true")
+    parser.addoption("--fixture-cache-ignore", action="store_true")
 
 
-def pytest_runtest_setup(item: pytest.Item) -> None:
+def pytest_runtest_setup(item: pytest.Item) -> None:  # pragma: no cover
     """
     Optionally exclude tests based on passed in options.
 

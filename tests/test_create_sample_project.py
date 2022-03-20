@@ -68,15 +68,18 @@ def fix_sample_dir() -> Iterator[str]:
         yield name
     finally:
         q_name = "tmp/{name}"
-        if os.path.exists(q_name):
+        if os.path.exists(q_name):  # pragma: no cover
             shutil.rmtree(q_name)
 
 
 def add_dummy_command(
     dir_path: pathlib.Path, name: str, command: str = ""
-) -> None:
+) -> None:  # pragma: no cover
     """
     Create a dummy executable in `dir_path`.
+
+    Note: ignore in coverage because we don't run "--fast"
+    when doing coverage.
     """
     command_path = dir_path / name
     command_path.write_text(command)
@@ -89,7 +92,7 @@ def fix_mock_pip(
     tmp_dir: pathlib.Path,
     request: pytest.FixtureRequest,
     monkeypatch: pytest.MonkeyPatch,
-) -> Iterator[str]:
+) -> Iterator[str]:  # pragma: no cover
     """
     Add mock "pip" command to path if "--mock-pip" option is set.
 
@@ -97,6 +100,9 @@ def fix_mock_pip(
 
     To speed up tests that use pip install but don't depend
     on correct functioning.
+
+    Note: ignore in coverage because we don't run "--fast"
+    when doing coverage.
     """
     if request.config.getoption("--fast"):
         add_dummy_command(tmp_dir, "pip")
