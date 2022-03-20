@@ -4,9 +4,19 @@ import os
 import pathlib
 import tempfile
 
-import pytest
+from .fixtures import (  # noqa
+    fix_dvc_repo,
+    fix_dvc_repo_session,
+    fix_empty_kedro_repo_session,
+    fix_empty_repo,
+    fix_empty_repo_session,
+    fix_tmp_dir,
+    fix_tmp_dir_session,
+    to_memoized_dir,
+    to_tmp_dir,
+)
 
-from .fixtures import to_memoized_dir, to_tmp_dir  # noqa
+root = os.getcwd()
 
 
 def test_to_tmp_dir():
@@ -26,13 +36,11 @@ def test_fix_tmp_dir(tmp_dir):
     assert len(os.listdir(tmp_dir)) == 0
 
 
-def test_fix_tmp_dir_session():
-    dirs = os.listdir("./tmp")
-    res = pytest.main(
-        ["tests/fix_tmp_dir_session_test_util.py", "-k", "test_1 or test_2"]
-    )
-    assert dirs == os.listdir("./tmp")
-    assert "TESTS_FAILED" not in str(res)
+def test_fix_tmp_dir_session(tmp_dir_session, tmp_dir):
+    assert fix_tmp_dir_session._pytestfixturefunction.scope == "session"
+    assert tmp_dir_session != tmp_dir
+    assert os.listdir(tmp_dir_session) == os.listdir(tmp_dir)
+    os.chdir(root)
 
 
 def test_to_memoized_dir():
@@ -44,8 +52,8 @@ def test_to_memoized_dir():
             save_cache,
         ):  # test cache isn't saved
             tmp = tmp_dir
-            with open(str(tmp_dir) + "/uhh", "w+") as file:
-                file.write("blah")
+            with open(str(tmp_dir) + "/test_file", "w+") as file:
+                file.write("contents")
         assert len(os.listdir(cache_dir)) == 0
         assert not os.path.isdir(tmp)
 
@@ -55,13 +63,13 @@ def test_to_memoized_dir():
         ):  # test cache is created
             tmp2 = tmp_dir
             assert tmp != tmp2
-            with open(str(tmp_dir) + "/uhh", "w+") as file:
-                file.write("blah")
+            with open(str(tmp_dir) + "/test_file", "w+") as file:
+                file.write("contents")
             assert len(os.listdir(cache_dir)) == 0
             save_cache()
             assert len(os.listdir(cache_dir)) != 0
         assert not os.path.isdir(tmp2)
-        assert "uhh" in os.listdir(cache_dir)
+        assert "test_file" in os.listdir(cache_dir)
 
         with to_memoized_dir(cache_dir) as (
             tmp_dir,
@@ -70,62 +78,39 @@ def test_to_memoized_dir():
             tmp3 = tmp_dir
             assert tmp2 != tmp3
             assert tmp != tmp3
-            assert "uhh" in os.listdir(tmp_dir)
+            assert "test_file" in os.listdir(tmp_dir)
         assert not os.path.isdir(tmp3)
-        assert "uhh" in os.listdir(cache_dir)
+        assert "test_file" in os.listdir(cache_dir)
 
 
-def test_fix_dvc_repo_session():
-    dirs = os.listdir("./tmp")
-    res = pytest.main(
-        ["tests/fix_tmp_dir_session_test_util.py", "-k", "test_3 or test_4"]
+def test_fix_dvc_repo(dvc_repo_session, dvc_repo):
+    assert fix_dvc_repo_session._pytestfixturefunction.scope == "session"
+    assert dvc_repo_session != dvc_repo
+    assert os.listdir(dvc_repo_session.root_dir) == os.listdir(
+        dvc_repo.root_dir
     )
-    assert dirs == os.listdir("./tmp")
-    assert "TESTS_FAILED" not in str(res)
+
+    assert ".dvc" in os.listdir(dvc_repo.root_dir)
+    os.chdir(root)
 
 
-dir = None
-
-
-def test_fix_dvc_repo_helper(dvc_repo_session):
-    global dir
-    dir = dvc_repo_session.root_dir
-    assert dir is not None
-    os.chdir("../..")
-
-
-def test_fix_dvc_repo(dvc_repo):
-    print(os.getcwd())
-    assert dir != dvc_repo.root_dir
-    assert os.listdir(dir) == os.listdir(dvc_repo.root_dir)
-
-
-def test_fix_empty_kedro_repo_session():
-    dirs = os.listdir("./tmp")
-    res = pytest.main(
-        ["tests/fix_tmp_dir_session_test_util.py", "-k", "test_5 or test_6"]
+def test_fix_empty_kedro_repo(empty_kedro_repo_session):
+    print("kedro repo", os.getcwd(), empty_kedro_repo_session)
+    assert (
+        fix_empty_kedro_repo_session._pytestfixturefunction.scope == "session"
     )
-    assert dirs == os.listdir("./tmp")
-    assert "TESTS_FAILED" not in str(res)
+
+    assert "conf" in os.listdir(empty_kedro_repo_session)
+    os.chdir(root)
 
 
-def test_fix_empty_repo_session():
-    dirs = os.listdir("./tmp")
-    res = pytest.main(
-        ["tests/fix_tmp_dir_session_test_util.py", "-k", "test_7 or test_8"]
+def test_fix_empty_repo(empty_repo_session, empty_repo):
+    print("empty repo", os.getcwd(), empty_repo)
+    assert fix_empty_repo_session._pytestfixturefunction.scope == "session"
+    assert empty_repo_session != empty_repo
+    assert os.listdir(empty_repo_session.root_dir) == os.listdir(
+        empty_repo.root_dir
     )
-    assert dirs == os.listdir("./tmp")
-    assert "TESTS_FAILED" not in str(res)
 
-
-def test_fix_empty_repo_helper(empty_repo_session):
-    global dir
-    dir = empty_repo_session.root_dir
-    assert dir is not None
-    os.chdir("../..")
-
-
-def test_fix_empty_repo(empty_repo):
-    print(os.getcwd())
-    assert dir != empty_repo.root_dir
-    assert os.listdir(dir) == os.listdir(empty_repo.root_dir)
+    assert ".dvc" in os.listdir(empty_repo.root_dir)
+    assert "conf" in os.listdir(empty_repo.root_dir)
