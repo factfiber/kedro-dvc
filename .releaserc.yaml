@@ -1,0 +1,35 @@
+branches:
+  - main
+  - {name: alpha, prerelease: true}
+  - {name: beta, prerelease: true}
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - - "@google/semantic-release-replace-plugin"
+    - replacements:
+      - files:
+        - pyproject.toml
+        from: 'version = ".*"'
+        to: 'version = "${nextRelease.version}"'
+        results:
+          - file: pyproject.toml
+            hasChanged: true
+            numMatches: 1
+            numReplacements: 1
+        countMatches: true
+      - files:
+        - src/kedro-dvc/__init__.py
+        from: '__version__ = ".*"'
+        to: '__version__ = "${nextRelease.version}"'
+        results:
+          - file: src/kedro-dvc/__init__.py
+            hasChanged: true
+            numMatches: 1
+            numReplacements: 1
+        countMatches: true
+  - - "@semantic-release/git"
+    - assets:
+      - pyproject.toml
+      - src/kedro-dvc/*.py
+  - "@semantic-release/github"
+
