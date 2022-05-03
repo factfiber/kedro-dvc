@@ -18,11 +18,11 @@ plugins:
             numReplacements: 1
         countMatches: true
       - files:
-        - src/kedro-dvc/__init__.py
+        - src/kedro_dvc/__init__.py
         from: '__version__ = ".*"'
         to: '__version__ = "${nextRelease.version}"'
         results:
-          - file: src/kedro-dvc/__init__.py
+          - file: src/kedro_dvc/__init__.py
             hasChanged: true
             numMatches: 1
             numReplacements: 1
@@ -30,6 +30,6 @@ plugins:
   - - "@semantic-release/git"
     - assets:
       - pyproject.toml
-      - src/kedro-dvc/*.py
+      - src/kedro_dvc/*.py
   - "@semantic-release/github"
 

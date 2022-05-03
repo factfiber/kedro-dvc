@@ -38,7 +38,7 @@ create-sample-project = "bin/create-sample-project.sh"
 "test-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest"
 "test-local" = "poetry run pytest"
 "test-watch-cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing tests"
-"test-watch-cov-local" = "poetry run ptw -- --last-failed --new-first  --cov --cov-report term-missing"
+"test-watch-cov-local" = "poetry run ptw src tests -- --last-failed --new-first  --cov kedro_dvc --cov-report term-missing tests"
 "test-watch-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
 "test-watch-local" = "poetry run ptw -- --last-failed --new-first"
 
