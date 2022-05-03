@@ -3,7 +3,7 @@ authors = ["Shaun Cutts <shaunc@factfiber.com>"]
 description = "Kedro-DVC integration to track and distribute experiments."
 license = "See License in LICENSE"
 name = "kedro-dvc"
-version = "0.3.0"
+version = "0.3.0-alpha.1"
 
 packages = [{include = "kedro_dvc", from = "src"}]
 
