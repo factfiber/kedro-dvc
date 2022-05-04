@@ -1,15 +1,15 @@
 [tool.kedro]
 package_name = "basic_project"
 project_name = "basic-project"
-project_version = "0.17.6"
+project_version = "0.18.0"
 
 [tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
 force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
+include_trailing_comma = true
 known_third_party = "kedro"
+line_length = 88
+multi_line_output = 3
+use_parentheses = true
 
 [tool.pytest.ini_options]
 addopts = """
@@ -17,6 +17,6 @@ addopts = """
 --cov src/basic_project -ra"""
 
 [tool.coverage.report]
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
 fail_under = 0
 show_missing = true
-exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
