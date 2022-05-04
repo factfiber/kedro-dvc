@@ -7,6 +7,9 @@ from kedro_dvc import cli
 
 
 def test_cli() -> None:
+    """
+    Test the CLI.
+    """
     runner = CliRunner()
     result = runner.invoke(cli.dvc, "--help")
     assert result.exit_code == 0

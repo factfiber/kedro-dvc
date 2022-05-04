@@ -6,6 +6,7 @@ import tempfile
 from functools import wraps
 from typing import Any, Callable
 
+import pytest
 from dvc.repo import Repo as DvcRepo
 
 from .fixtures import (  # noqa
@@ -25,7 +26,7 @@ root = os.getcwd()
 
 def ensure_root_at_end(test_fct: Callable[..., None]) -> Callable[..., None]:
     """
-    Ensure that the root directory is at the end of the stack.
+    Ensure that we return to the root directory after the test.
     """
 
     @wraps(test_fct)
@@ -118,8 +119,8 @@ def test_fix_dvc_repo(dvc_repo_session: DvcRepo, dvc_repo: DvcRepo) -> None:
 
 
 @ensure_root_at_end
+@pytest.mark.slow
 def test_fix_empty_kedro_repo(empty_kedro_repo_session: pathlib.Path) -> None:
-    print("kedro repo", os.getcwd(), empty_kedro_repo_session)
     assert (
         fix_empty_kedro_repo_session._pytestfixturefunction.scope == "session"
     )
@@ -129,10 +130,10 @@ def test_fix_empty_kedro_repo(empty_kedro_repo_session: pathlib.Path) -> None:
 
 
 @ensure_root_at_end
+@pytest.mark.slow
 def test_fix_empty_repo(
     empty_repo_session: DvcRepo, empty_repo: DvcRepo
 ) -> None:
-    print("empty repo", os.getcwd(), empty_repo)
     assert fix_empty_repo_session._pytestfixturefunction.scope == "session"
     assert fix_empty_repo._pytestfixturefunction.scope == "function"
     assert empty_repo_session != empty_repo
