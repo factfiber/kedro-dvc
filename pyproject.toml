@@ -8,14 +8,14 @@ version = "0.3.0-alpha.1"
 packages = [{include = "kedro_dvc", from = "src"}]
 
 [tool.poetry.dependencies]
-dvc = "^2.9.3"
-kedro = ">=0.17.7, <0.19"
+dvc = ">=2.10,<3"
+kedro = ">=0.18.0, <1"
 numpy = "^1.22.2"
 pygit2 = "^1.9.0"
-python = ">=3.8, <3.9"
+python = ">=3.8, <3.10"
 
 [tool.poetry.dev-dependencies]
-black = "21.12b0, <23"
+black = "^22.3.0"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 mypy = "^0.931"
@@ -33,14 +33,14 @@ requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@
 "build-docker" = "docker build -t factfiber/kedro-dvc-test ."
 create-sample-project = "bin/create-sample-project.sh"
 "run-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest"
-"test-cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest --cov --cov-report term-missing"
-"test-cov-local" = "poetry run pytest --cov --cov-report term-missing"
-"test-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest"
-"test-local" = "poetry run pytest"
-"test-watch-cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing tests"
-"test-watch-cov-local" = "poetry run ptw src tests -- --last-failed --new-first  --cov kedro_dvc --cov-report term-missing tests"
-"test-watch-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
-"test-watch-local" = "poetry run ptw -- --last-failed --new-first"
+"test:cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest --cov --cov-report term-missing"
+"test:cov-local" = "poetry run pytest --cov --cov-report term-missing"
+"test:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest"
+"test:local" = "poetry run pytest"
+"test:watch-cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing tests"
+"test:watch-cov-local" = "poetry run ptw src tests -- --last-failed --new-first  --cov kedro_dvc --cov-report term-missing tests"
+"test:watch-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
+"test:watch-local" = "poetry run ptw -- --last-failed --new-first"
 
 # NB poetry does not (yet?) support PEP 621
 [tool.poetry.plugins."kedro.project_commands"]
