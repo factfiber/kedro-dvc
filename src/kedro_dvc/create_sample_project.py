@@ -1,11 +1,12 @@
 import os
 import pathlib
+import shutil
 import subprocess
 from typing import Sequence
 
 import click
 import virtualenv
-from pygit2 import clone_repository
+from pygit2 import clone_repository, init_repository
 
 
 class InvalidName(ValueError):
@@ -33,6 +34,7 @@ def create_sample_project(
     name: str,
     from_branch: str = DEFAULT_SAMPLE_BRANCH,
     kd_repo_path: str = "../..",
+    preserve_git: bool = False,
 ) -> None:
     """
     Create a kedro sample project from repo branch with skeleton.
@@ -40,6 +42,8 @@ def create_sample_project(
     Args:
         name: name of sample project
         from_branch: name of branch for kedro starter
+        kd_repo_path: path to kedro repo
+        preserve_git: if True, don't replace git repo with newly initialized
     """
     if name == "":
         raise InvalidName("pass valid directory name")
@@ -58,6 +62,9 @@ def create_sample_project(
             )
         except Exception as exc:
             raise CantCheckout(f"result: {exc}")
+        if not preserve_git:
+            shutil.rmtree(".git")
+            init_repository(".")
         virtualenv.cli_run([f"env/{name}"])
         # # using virtualenv.create_environment no longer works
         activate_this_file = f"env/{name}/bin/activate_this.py"
@@ -98,9 +105,15 @@ def _exec_file(activate_this_file: str) -> None:
     "branch", required=False, default=DEFAULT_SAMPLE_BRANCH  # type: ignore
 )
 @click.argument("kd_path", required=False, default="../..")  # type: ignore
+@click.option(
+    "--preserve-git",
+    is_flag=True,
+    default=False,
+    help="preserve git repo w/ link to origin",
+)  # type: ignore
 @click.pass_context  # type: ignore
 def create_sample_project_cmd(
-    ctx: click.Context, name: str, branch: str, kd_path: str
+    ctx: click.Context, name: str, branch: str, kd_path: str, preserve_git: bool
 ) -> None:
     """
     Create sample project in tmp/<name>.
@@ -110,7 +123,12 @@ def create_sample_project_cmd(
     """
     print(f"creating sample project {name} from branch {branch}")
     try:
-        create_sample_project(name, from_branch=branch, kd_repo_path=kd_path)
+        create_sample_project(
+            name,
+            from_branch=branch,
+            kd_repo_path=kd_path,
+            preserve_git=preserve_git,
+        )
     except CantCheckout:
         param = _get_param(ctx.command.params, "branch")
         raise click.BadParameter("Can't check out branch", param=param)

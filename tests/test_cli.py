@@ -11,6 +11,6 @@ def test_cli() -> None:
     Test the CLI.
     """
     runner = CliRunner()
-    result = runner.invoke(cli.dvc, "--help")
+    result = runner.invoke(cli.kedro_dvc_cli, "--help")
     assert result.exit_code == 0
-    assert cli.dvc.__doc__ in result.stdout
+    assert cli.kedro_dvc_cli.__doc__ in result.stdout

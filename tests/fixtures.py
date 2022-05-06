@@ -1,10 +1,7 @@
-import contextlib
-import os
 import pathlib
 import shutil
 import subprocess
-import tempfile
-from typing import Callable, Iterator, Optional, Tuple, cast
+from typing import Iterator
 
 import pytest
 from dvc.repo import Repo as DvcRepo
@@ -12,31 +9,10 @@ from pytest_cases import fixture
 
 from kedro_dvc.create_sample_project import create_sample_project
 
+from .util import add_python_path, copy_link_tree, to_memoized_dir, to_tmp_dir
+
 CACHE_DIR = pathlib.Path(__file__).parent / ".fixture-cache"
 APP_DIR = pathlib.Path(__file__).parent.parent
-
-root = os.getcwd()
-
-
-@contextlib.contextmanager
-def to_tmp_dir() -> Iterator[pathlib.Path]:
-    """
-    Create temp directory, yield context within it.
-    """
-    with tempfile.TemporaryDirectory() as dir:
-        prev_dir = os.getcwd()
-        os.chdir(dir)
-        try:
-            yield pathlib.Path(dir)
-        finally:
-            try:
-                os.chdir(prev_dir)
-            except Exception:  # pragma: no cover
-                print(
-                    "WARNING: Couldn't change back to previous"
-                    + f" directory after test: {str(prev_dir)}"
-                )
-                os.chdir(root)
 
 
 @fixture(name="tmp_dir")  # type: ignore
@@ -57,45 +33,6 @@ def fix_tmp_dir_session() -> Iterator[pathlib.Path]:
     """
     with to_tmp_dir() as dir:
         yield dir
-
-
-@contextlib.contextmanager
-def to_memoized_dir(
-    cache_dir: pathlib.Path, ignore_cache: bool = False
-) -> Iterator[Tuple[pathlib.Path, Optional[Callable[[], None]]]]:
-    """
-    Create temp dir; fill from cache if exists; yield context within it.
-
-    If the cache dir is empty, `save_cache` will be a function that
-    will save the cache. Otherwise, it will be None.
-
-    Returns: tuple of (`dir`, `save_cache`):
-        dir: pathlib.Path to the created directory
-        save_cache: optional callable to save the cache to the `cache_dir`
-    """
-    with to_tmp_dir() as tmp_dir:
-        save_cache: Optional[Callable[[], None]] = None
-        if (
-            cache_dir.exists()
-            and len(os.listdir(cache_dir)) != 0
-            and not ignore_cache
-        ):
-            shutil.copytree(str(cache_dir), str(tmp_dir), dirs_exist_ok=True)
-        else:
-            if cache_dir.exists() and len(os.listdir(cache_dir)) != 0:
-                shutil.rmtree(cache_dir)
-                # for f in cache_dir.iterdir():
-                #     if f.is_file():
-                #         f.unlink()
-                #     else:
-                #         shutil.rmtree(f)
-            save_cache = cast(
-                Callable[[], None],
-                lambda: shutil.copytree(
-                    str(tmp_dir), str(cache_dir), dirs_exist_ok=True
-                ),
-            )
-        yield tmp_dir, save_cache
 
 
 @fixture(name="dvc_repo_session", scope="session")  # type: ignore
@@ -163,6 +100,19 @@ def fix_empty_kedro_repo_session(
         yield dir
 
 
+@fixture(name="empty_kedro_repo")  # type: ignore
+def fix_empty_kedro_repo(
+    empty_kedro_repo_session: DvcRepo,
+) -> Iterator[pathlib.Path]:
+    """
+    Create kedro repo (copying session repo); cwd within repo.
+    """
+    with to_tmp_dir() as dir, add_python_path(pathlib.Path(dir) / "src"):
+        copy_link_tree(empty_kedro_repo_session, dir, "env")
+        # shutil.copytree(empty_kedro_repo_session, dir, dirs_exist_ok=True)
+        yield dir
+
+
 @fixture(name="empty_repo_session", scope="session")  # type: ignore
 def fix_empty_repo_session(
     request: pytest.FixtureRequest,
@@ -202,8 +152,9 @@ def fix_empty_repo(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
     """
     Create kedro sample with dvc repo (copying session repo); cwd inside.
     """
-    with to_tmp_dir() as dir:
-        shutil.copytree(empty_repo_session.root_dir, dir, dirs_exist_ok=True)
+    with to_tmp_dir() as dir, add_python_path(pathlib.Path(dir) / "src"):
+        copy_link_tree(empty_repo_session.root_dir, dir, "env")
+        # shutil.copytree(empty_repo_session.root_dir, dir, dirs_exist_ok=True)
         dvc_repo = DvcRepo(root_dir=dir)
         try:
             yield dvc_repo

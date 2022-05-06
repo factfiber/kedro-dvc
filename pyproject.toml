@@ -14,7 +14,7 @@ numpy = "^1.22.2"
 pygit2 = "^1.9.0"
 python = ">=3.8, <3.10"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 black = "^22.3.0"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
@@ -24,6 +24,7 @@ pytest = "^7.0.0"
 pytest-cases = "^3.6.8"
 pytest-cov = "^3.0.0"
 pytest-watcher = "^0.2.3"
+pytest-mock = "^3.7.0"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
@@ -38,7 +39,7 @@ create-sample-project = "bin/create-sample-project.sh"
 "test:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest"
 "test:local" = "poetry run pytest"
 "test:watch-cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing tests"
-"test:watch-cov-local" = "poetry run ptw src tests -- --last-failed --new-first  --cov kedro_dvc --cov-report term-missing tests"
+"test:watch-cov-local" = "poetry run ptw . -- --last-failed --new-first  --cov kedro_dvc --cov-report term-missing tests"
 "test:watch-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
 "test:watch-local" = "poetry run ptw -- --last-failed --new-first"
 
