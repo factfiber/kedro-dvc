@@ -1,3 +1,31 @@
+"""
+Fixtures for kedro-dvc tests.
+
+Several fixtures create or depend on a temporary sample project.
+
+Creating a sample project is time consuming, as it involves installing
+dependencies. For this reason, the fixtures are cached.
+
+In particular, session-scoped fixtures are cached, and per-function-scoped
+fixtures then copy from the session-scoped fixtures.
+
+Unfortunately, this mechanism is still slow, as the "env" directory is very
+large, so takes much time to copy. For this reason, we link to "env" rather
+than copy it.
+
+In fact, this doesn't produce a fully working project. In particular,
+env/test/bin/ python files have absolute paths which refer to the original
+temp directory where the project was created.
+
+TODO: This could be fixed: these links could be made to point to the cached
+versions -- then copies of repo would always link to cached version, which
+would point to self. Also, kedro-dvc itself can be installed in "dev" mode,
+using a relative link to the development repo.
+
+Currently this is only a problem for full end-to-end test of cli via kedro cli
+(which is supposed to read the kedro-dvc cli entrypoint at startup).
+"""
+
 import pathlib
 import shutil
 import subprocess
@@ -8,6 +36,7 @@ from dvc.repo import Repo as DvcRepo
 from pytest_cases import fixture
 
 from kedro_dvc.create_sample_project import create_sample_project
+from kedro_dvc.kd_context import KDContext
 
 from .util import add_python_path, copy_link_tree, to_memoized_dir, to_tmp_dir
 
@@ -87,7 +116,9 @@ def fix_empty_kedro_repo_session(
     """
     cache_dir = CACHE_DIR / "empty_kedro_repo_session"
     ignore_cache = request.config.getoption("--fixture-cache-ignore")
-    with to_memoized_dir(cache_dir, ignore_cache=ignore_cache) as (
+    with to_memoized_dir(
+        cache_dir, ignore_cache=ignore_cache, link=("env",)
+    ) as (
         dir,
         save_cache,
     ):
@@ -126,7 +157,9 @@ def fix_empty_repo_session(
     """
     cache_dir = CACHE_DIR / "empty_repo_session"
     ignore_cache = request.config.getoption("--fixture-cache-ignore")
-    with to_memoized_dir(cache_dir, ignore_cache=ignore_cache) as (
+    with to_memoized_dir(
+        cache_dir, ignore_cache=ignore_cache, link=("env",)
+    ) as (
         dir,
         save_cache,
     ):
@@ -160,6 +193,14 @@ def fix_empty_repo(empty_repo_session: DvcRepo) -> Iterator[DvcRepo]:
             yield dvc_repo
         finally:
             dvc_repo.close()
+
+
+@fixture(name="kd_context")  # type: ignore
+def fix_kd_context(empty_repo: DvcRepo) -> KDContext:
+    """
+    Return kedro-dvc context for repo.
+    """
+    return KDContext(empty_repo.root_dir)
 
 
 def clear_fixture_cache() -> None:  # pragma: no cover

@@ -79,6 +79,8 @@ def create_sample_project(
             new_req = f"-e {kd_repo_path}\n{new_req}"
             pathlib.Path("src/requirements.txt").write_text(new_req)
         subprocess.check_call(["pip", "install", "-r", "src/requirements.txt"])
+        subprocess.check_call(["git", "add", "."])
+        subprocess.check_call(["git", "commit", "-m", "chore: initial commit"])
     finally:
         # make sure we leave shell, return to original directory after finished
         try:

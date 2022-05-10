@@ -68,7 +68,9 @@ def to_tmp_dir() -> Iterator[pathlib.Path]:
 
 @contextlib.contextmanager
 def to_memoized_dir(
-    cache_dir: pathlib.Path, ignore_cache: bool = False
+    cache_dir: pathlib.Path,
+    ignore_cache: bool = False,
+    link: Sequence[str] = (),
 ) -> Iterator[Tuple[pathlib.Path, Optional[Callable[[], None]]]]:
     """
     Create temp dir; fill from cache if exists; yield context within it.
@@ -87,7 +89,13 @@ def to_memoized_dir(
             and len(os.listdir(cache_dir)) != 0
             and not ignore_cache
         ):
-            shutil.copytree(str(cache_dir), str(tmp_dir), dirs_exist_ok=True)
+            if len(link) == 0:
+                shutil.copytree(
+                    str(cache_dir), str(tmp_dir), dirs_exist_ok=True
+                )
+            else:
+                copy_link_tree(cache_dir, tmp_dir, link)
+
         else:
             if cache_dir.exists() and len(os.listdir(cache_dir)) != 0:
                 shutil.rmtree(cache_dir)
