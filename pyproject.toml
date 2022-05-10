@@ -32,9 +32,9 @@ build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@master"]
 
 [tool.poetry-exec-plugin.commands]
-"build-docker" = "docker build -t factfiber/kedro-dvc-test ."
+"build:docker" = "docker build -t factfiber/kedro-dvc-test ."
 create-sample-project = "bin/create-sample-project.sh"
-"run-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest"
+"run:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest"
 "test:cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest --cov --cov-report term-missing"
 "test:cov-local" = "poetry run pytest --cov kedro_dvc --cov-report term-missing"
 "test:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest"
