@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: 3.9
     - name: Install Python Poetry
       uses: abatilo/actions-poetry@v2.1.4
       with:
@@ -44,7 +44,7 @@ jobs:
         python -m poetry run mypy src tests
     - name: Test with pytest with coverage
       run: |
-        python -m poetry run pytest -v tests --cov-fail-under=100
+        python -m poetry run pytest -v tests --cov kedro_dvc --cov-report term-missing --cov-fail-under=100
     
   Release:
     needs: Quality
