@@ -123,7 +123,11 @@ def fix_empty_kedro_repo_session(
         save_cache,
     ):
         if save_cache:
-            create_sample_project("test", kd_repo_path=str(APP_DIR))
+            create_sample_project(
+                "test",
+                kd_repo_path=str(APP_DIR),
+                initial_commit_hook=_initial_commit_with_dummy_user,
+            )
             for path in pathlib.Path("tmp/test").iterdir():
                 shutil.move(str(path), ".")
             shutil.rmtree("tmp")
@@ -201,6 +205,18 @@ def fix_kd_context(empty_repo: DvcRepo) -> KDContext:
     Return kedro-dvc context for repo.
     """
     return KDContext(empty_repo.root_dir)
+
+
+def _initial_commit_with_dummy_user() -> None:
+    """
+    Initial commit of test sample project with dummy user.
+    """
+    subprocess.check_call(["git", "config", "user.name", "dummy_user"])
+    subprocess.check_call(
+        ["git", "config", "user.email", "dummy@factfiber.com"]
+    )
+    subprocess.check_call(["git", "add", "."])
+    subprocess.check_call(["git", "commit", "-m", "chore: initial commit"])
 
 
 def clear_fixture_cache() -> None:  # pragma: no cover

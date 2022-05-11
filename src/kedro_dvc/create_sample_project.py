@@ -2,7 +2,7 @@ import os
 import pathlib
 import shutil
 import subprocess
-from typing import Sequence
+from typing import Callable, Sequence
 
 import click
 import virtualenv
@@ -30,11 +30,20 @@ class CantCheckout(KeyError):
 DEFAULT_SAMPLE_BRANCH = "sample-project-basic"
 
 
+def _default_initial_commit() -> None:
+    """
+    Initial commit with sample project skeleton.
+    """
+    subprocess.check_call(["git", "add", "."])
+    subprocess.check_call(["git", "commit", "-m", "chore: initial commit"])
+
+
 def create_sample_project(
     name: str,
     from_branch: str = DEFAULT_SAMPLE_BRANCH,
     kd_repo_path: str = "../..",
     preserve_git: bool = False,
+    initial_commit_hook: Callable[[], None] = _default_initial_commit,
 ) -> None:
     """
     Create a kedro sample project from repo branch with skeleton.
@@ -79,8 +88,7 @@ def create_sample_project(
             new_req = f"-e {kd_repo_path}\n{new_req}"
             pathlib.Path("src/requirements.txt").write_text(new_req)
         subprocess.check_call(["pip", "install", "-r", "src/requirements.txt"])
-        subprocess.check_call(["git", "add", "."])
-        subprocess.check_call(["git", "commit", "-m", "chore: initial commit"])
+        initial_commit_hook()
     finally:
         # make sure we leave shell, return to original directory after finished
         try:

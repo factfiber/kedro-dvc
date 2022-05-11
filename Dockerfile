@@ -1,4 +1,4 @@
-FROM python:3.8.12-slim-buster
+FROM python:3.9-slim-buster
 
 # system installs first -- unlikely to change
 RUN apt-get update \
@@ -20,5 +20,7 @@ RUN poetry install && poetry update
 ADD . /app
 ADD ./bin/create-sample-project.sh bin/create-sample-project.sh
 RUN sed -i.bak 's/\r$//' bin/create-sample-project.sh
+RUN git config --global user.email "dummy@factfiber.com"
+RUN git config --global user.name "Dummy User"
 RUN poetry exec create-sample-project example sample-project-basic
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/bash", "-c" ]
