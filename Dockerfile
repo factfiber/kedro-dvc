@@ -23,4 +23,6 @@ RUN sed -i.bak 's/\r$//' bin/create-sample-project.sh
 RUN git config --global user.email "dummy@factfiber.com"
 RUN git config --global user.name "Dummy User"
 RUN poetry exec create-sample-project example sample-project-basic
-ENTRYPOINT [ "/bin/bash", "-c" ]
+
+# disable python entrypoint
+ENTRYPOINT []
