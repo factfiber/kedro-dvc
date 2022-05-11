@@ -46,7 +46,7 @@ create-sample-project = "bin/create-sample-project.sh"
 
 # NB poetry does not (yet?) support PEP 621
 [tool.poetry.plugins."kedro.project_commands"]
-dvc = "kedro_dvc.cli:dvc"
+dvc = "kedro_dvc.cli:kedro_dvc_cli"
 
 [tool.black]
 exclude = '''
