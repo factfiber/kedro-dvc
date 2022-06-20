@@ -9,7 +9,7 @@ packages = [{include = "kedro_dvc", from = "src"}]
 
 [tool.poetry.dependencies]
 anyconfig = ">=0.10"
-dvc = ">=2.10,<3"
+dvc = ">=2.11,<3"
 kedro = ">=0.18.0, <1"
 pygit2 = "^1.9.0"
 python = ">=3.8, <3.10"
@@ -35,14 +35,14 @@ requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@
 "build:docker" = "docker build -t factfiber/kedro-dvc-test ."
 create-sample-project = "bin/create-sample-project.sh"
 "run:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest"
-"test:cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest --cov --cov-report term-missing"
-"test:cov-local" = "poetry run pytest --cov kedro_dvc --cov-report term-missing"
 "test:docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest"
-"test:local" = "poetry run pytest"
-"test:watch-cov-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing"
-"test:watch-cov-local" = "poetry run ptw . -- --last-failed --new-first  --cov kedro_dvc --cov-report term-missing"
-"test:watch-docker" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
-"test:watch-local" = "poetry run ptw -- --last-failed --new-first"
+"test:docker:no-cov" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run pytest --cov --cov-report term-missing"
+"test:docker:watch" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first --cov --cov-report term-missing"
+"test:docker:watch:no-cov" = "docker run --rm -it -v $PWD/src:/app/src -v $PWD/tests:/app/tests factfiber/kedro-dvc-test:latest poetry run ptw -- --last-failed --new-first"
+"test:local" = "poetry run pytest --cov kedro_dvc --cov-report term-missing"
+"test:local:no-cov" = "poetry run pytest"
+"test:local:watch" = "poetry run ptw . -- --last-failed --new-first  --cov kedro_dvc --cov-report term-missing"
+"test:local:watch:no-cov" = "poetry run ptw . -- --last-failed --new-first"
 
 # NB poetry does not (yet?) support PEP 621
 [tool.poetry.plugins."kedro.project_commands"]
