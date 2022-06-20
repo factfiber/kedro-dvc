@@ -1,4 +1,4 @@
-# Ketro-DVC
+# Kedro-DVC
 
 Kedro-DVC integration to track and distribute experiments.
 
@@ -6,7 +6,7 @@ We are just starting out. See [the design document](./doc/design.md) for plans.
 
 ## Contributing
 
-**NOTE**: Until their 0.18.0 release, we will be using the development version of kedro.
+**NOTE**: Until their 0.18.0 release, we will be using the development version of Kedro.
 
 ```shell
 git clone git@github.com:FactFiber/kedro-dvc.git

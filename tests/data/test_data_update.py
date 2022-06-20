@@ -3,7 +3,6 @@ import pathlib
 
 import anyconfig
 import pytest
-from dvc.exceptions import PathMissingError
 from dvc.repo import Repo as DvcRepo
 
 from kedro_dvc import data, kd_context
@@ -89,12 +88,12 @@ def test_data_update_remove_obsolete(
         assert not (entry.path.parent / "dvc" / (entry.name + ".dvc")).exists()
     # assert "Removing obsolete file foo" in caplog.text
 
-    with pytest.raises(PathMissingError):
-        context.dvc_repo.ls(
-            str(context.project_path),
-            path="data",
-            dvc_only=True,
-        )
+    result = context.dvc_repo.ls(
+        str(context.project_path),
+        path="data",
+        dvc_only=True,
+    )
+    assert len(result) == 0
 
     assert datafile not in (context.project_path / ".gitignore").read_text()
 
@@ -123,12 +122,12 @@ def test_data_update_remove_obsolete_no_commit(
         assert not (entry.path.parent / "dvc" / (entry.name + ".dvc")).exists()
     # assert "Removing obsolete file foo" in caplog.text
 
-    with pytest.raises(PathMissingError):
-        context.dvc_repo.ls(
-            str(context.project_path),
-            path="data",
-            dvc_only=True,
-        )
+    result = context.dvc_repo.ls(
+        str(context.project_path),
+        path="data",
+        dvc_only=True,
+    )
+    assert len(result) == 0
     status = context.dvc_repo.status()
     assert len(status) == 0
 
@@ -227,18 +226,18 @@ def check_dvc_status(
     """
     catalog = list(iter_catalog_entries(context))
     if n_entries == 0:
-        with pytest.raises(PathMissingError):
-            context.dvc_repo.ls(
-                str(context.project_path),
-                path="data",
-                dvc_only=True,
-            )
+        result = context.dvc_repo.ls(
+            str(context.project_path),
+            path="data",
+            dvc_only=True,
+        )
+        assert len(result) == 0
         for entry in catalog:
             assert not (
                 entry.path.parent / "dvc" / (entry.name + ".dvc")
             ).exists()
-
         return
+
     info = context.dvc_repo.ls(
         str(context.project_path),
         path="data",
