@@ -11,6 +11,8 @@ from kedro.framework.project import configure_project, settings
 from kedro.framework.session import KedroSession
 from kedro.framework.startup import ProjectMetadata, _get_project_metadata
 
+from . import exceptions
+
 
 class KDContext:
     """
@@ -79,4 +81,9 @@ class KDContext:
                 raise
             # NB: requires .git to be present in project_dir
             dvc_repo = DvcRepo.init(str(self.project_path))
+        else:
+            if install_dvc:
+                raise exceptions.AlreadyInstalled(
+                    "DVC already installed. (Run update to update config.)"
+                )
         return dvc_repo

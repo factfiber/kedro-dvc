@@ -4,12 +4,6 @@ Create kedro-dvc project or install in existing kedro project.
 from kedro_dvc.kd_context import KDContext
 
 
-class KedroDVCContext:
-    """
-    Wrapper for kedro context with access to
-    """
-
-
 def install_kedro_dvc(
     kd_context: KDContext,
 ) -> None:
@@ -18,7 +12,6 @@ def install_kedro_dvc(
     Args:
         project_dir: Path to the root of the kedro project.
     """
-    # context = KDContext(project_dir, metadata, install_dvc=True)
     _setup_kd_conf_root(kd_context)
     _setup_kd_conf_catalog(kd_context)
     _setup_kd_conf_pipelines(kd_context)
@@ -63,7 +56,7 @@ This is the kedro-dvc configuration for {project_name}.
 The ".dvc" files corresponding to catalog entries are stored in "dvc/"
 subdirectory of each kedro environment.
 
-The piplines are stored in ./pipelines/. Under each pipeline, DVC lock files
+The pipelines are stored in ./pipelines/. Under each pipeline, DVC lock files
 are written in subdirectories corresponding to each sequence of kedro
 environments used. For instance, when a pipeline "foo" is run in default
 'base' and 'local' environments, the pipeline itself is in
