@@ -25,10 +25,10 @@ using a relative link to the development repo.
 Currently this is only a problem for full end-to-end test of cli via kedro cli
 (which is supposed to read the kedro-dvc cli entrypoint at startup).
 """
-import sys
 import pathlib
 import shutil
 import subprocess
+import sys
 from typing import Iterator
 
 import pytest
