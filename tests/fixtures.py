@@ -28,7 +28,6 @@ Currently this is only a problem for full end-to-end test of cli via kedro cli
 import pathlib
 import shutil
 import subprocess
-import sys
 from typing import Iterator
 
 import pytest
@@ -168,30 +167,15 @@ def fix_empty_repo_session(
         save_cache,
     ):
         if save_cache:
-            s_from = str(dvc_repo_session.root_dir)
-            s_dir = str(dir)
-            print(
-                f"* COPY FROM DVC {s_from} TO TMP {s_dir}",
-                file=sys.stderr,
-                flush=True,
-            )
             shutil.copytree(dvc_repo_session.root_dir, dir, dirs_exist_ok=True)
             if (dir / ".git").exists():
                 # avoid conflict with kedro fixture setup of git repo
                 shutil.rmtree(str(dir / ".git"))
-            s_from = str(empty_kedro_repo_session)
-            print(
-                f"* COPY FROM KED {s_from} TO TMP {s_dir}",
-                file=sys.stderr,
-                flush=True,
-            )
             shutil.copytree(empty_kedro_repo_session, dir, dirs_exist_ok=True)
             empty_repo = DvcRepo(root_dir=dir)
             empty_repo.scm.add(".")
             empty_repo.scm.commit("feat: first commit of empty repo")
-            print("SAVE CACHE", file=sys.stderr, flush=True)
             save_cache()
-            print("DONE", file=sys.stderr, flush=True)
         else:  # pragma: no cover
             # note: we run with --fixture-cache-ignore for coverage so
             # don't hit this branch
