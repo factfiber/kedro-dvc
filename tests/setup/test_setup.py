@@ -14,9 +14,7 @@ from ..fixtures import (  # noqa
     fix_empty_kedro_repo_session as fix_empty_kedro_repo_session,
 )
 from ..fixtures import fix_empty_repo as fix_empty_repo  # noqa
-from ..fixtures import (  # noqa
-    fix_empty_repo_session as fix_empty_repo_session,
-)
+from ..fixtures import fix_empty_repo_session as fix_empty_repo_session  # noqa
 from ..fixtures import fix_tmp_dir as fix_tmp_dir  # noqa
 from ..fixtures import fix_tmp_dir_session as fix_tmp_dir_session  # noqa
 from .check_setup import check_repo_setup
