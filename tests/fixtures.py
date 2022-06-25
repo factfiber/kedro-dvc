@@ -171,11 +171,14 @@ def fix_empty_repo_session(
             s_from = str(dvc_repo_session.root_dir)
             s_dir = str(dir)
             print(
-                "* COPY FROM DVC {s_from} TO TMP {s_dir}",
+                f"* COPY FROM DVC {s_from} TO TMP {s_dir}",
                 file=sys.stderr,
                 flush=True,
             )
             shutil.copytree(dvc_repo_session.root_dir, dir, dirs_exist_ok=True)
+            if (dir / ".git").exists():
+                # avoid conflict with kedro fixture setup of git repo
+                shutil.rmtree(str(dir / ".git"))
             s_from = str(empty_kedro_repo_session)
             print(
                 f"* COPY FROM KED {s_from} TO TMP {s_dir}",
