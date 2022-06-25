@@ -35,8 +35,10 @@ def _default_initial_commit() -> None:
     Initial commit with sample project skeleton.
     """
     subprocess.check_call(["git", "add", "."])
-    user_out = subprocess.check_output(["git", "config", "user.name"]).decode()
-    if user_out.strip() == "":
+    u_result = subprocess.run(
+        ["git", "config", "user.name"], check=False, stdout=subprocess.PIPE
+    )
+    if u_result.stdout.decode().strip() == "" or u_result.returncode != 0:
         subprocess.check_call(["git", "config", "user.name", "dummy"])
         subprocess.check_call(
             ["git", "config", "user.email", "dummy@factfiber.com"]
